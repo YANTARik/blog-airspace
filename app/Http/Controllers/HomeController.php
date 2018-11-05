@@ -3,26 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\Tag;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
+
+    public function index() {
+        $posts = Post::paginate(10);
+
+        return view(pages.index)->with('posts', $posts);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('home');
+    public function show($slug) {
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        return view('pages.show', compact('post'));
+    }
+
+    public function tag($slug) {
+        $tag = Tag::where('slug', $slug)->firstOrFail();
+
+        $post = $tag->posts()->paginate(2);
+
+        return view('pagas.list', ['post' => $posts]);
     }
 }
