@@ -105,6 +105,6 @@ class Post extends Model
     }
 
     public function getComments() {
-        return $this->comments()->where('status', 1)->get();
+        return $this->comments()->get();
     }
 }

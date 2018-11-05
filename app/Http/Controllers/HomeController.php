@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
 
     public function index() {
-        $posts = Post::paginate(10);
+        $posts = Post::paginate(2);
 
         return view(pages.index)->with('posts', $posts);
     }
@@ -26,6 +26,6 @@ class HomeController extends Controller
 
         $post = $tag->posts()->paginate(2);
 
-        return view('pagas.list', ['post' => $posts]);
+        return view('pages.list', ['post' => $posts]);
     }
 }
