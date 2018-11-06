@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="description" content="Aviato E-Commerce Template">
@@ -12,13 +6,26 @@
 
     <title>Airspace | Creative Agency Bootstrap template</title>
 
-    <!-- common css -->
-    <link rel="stylesheet" href="/css/blog.css">
     <!-- Mobile Specific Meta-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png" />
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="/css/blog.css">
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Ionic Icon Css -->
+    <link rel="stylesheet" href="plugins/Ionicons/css/ionicons.min.css">
+    <!-- animate.css -->
+    <link rel="stylesheet" href="plugins/animate-css/animate.css">
+    <!-- Magnify Popup -->
+    <link rel="stylesheet" href="plugins/magnific-popup/dist/magnific-popup.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="plugins/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="plugins/slick-carousel/slick/slick-theme.css">
 
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -86,7 +93,7 @@
     </div>
 </header><!-- header close -->
 
-    @yield('content')
+    {{--@yield('content')--}}
 
 <!-- footer Start -->
 <footer class="footer">
@@ -129,19 +136,19 @@ Essential Scripts
 
 
 <!-- Google Map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>
+{{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>--}}
 
 <script type="text/javascript" src="/js/blog.js"></script>
 <script>
-    $(document).ready(function (){
-        $("#example1").DataTable();
-        $(".select2").select2();
-        //Date picker
-        $('#datepicker').datepicker({
-            autoclose: true,
-            format: 'dd/mm/yy'
-        });
-    });
+//    $(document).ready(function (){
+////        $("#example1").DataTable();
+////        $(".select2").select2();
+//        //Date picker
+//        $('#datepicker').datepicker({
+//            autoclose: true,
+//            format: 'dd/mm/yy'
+//        });
+//    });
 </script>
 </body>
 </html>

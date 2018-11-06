@@ -10,9 +10,10 @@ class HomeController extends Controller
 {
 
     public function index() {
-        $posts = Post::paginate(2);
 
-        return view(pages.index)->with('posts', $posts);
+        //$posts = Post::paginate(2);
+
+        return view('pages.index');
     }
 
     public function show($slug) {

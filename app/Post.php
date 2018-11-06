@@ -71,7 +71,7 @@ class Post extends Model
 
         $this->removeImage();
         $filename = str_random(10) . '.' . $image->extension();
-        $image->storeAs('uploads', $filename);
+        $image->saveAs('uploads', $filename);
         $this->image = $filename;
         $this->save();
     }
