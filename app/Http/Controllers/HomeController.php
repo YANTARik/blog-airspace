@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
+use App\Comment;
 
 class HomeController extends Controller
 {
 
     public function index() {
-
-        //$posts = Post::paginate(2);
 
         return view('pages.index');
     }
@@ -29,4 +28,31 @@ class HomeController extends Controller
 
         return view('pages.list', ['post' => $posts]);
     }
+
+    public function service() {
+        return view('pages.service');
+    }
+    public function contact() {
+        return view('pages.contact');
+    }
+
+    public function about() {
+        return view('pages.about');
+    }
+    public function comingSoon() {
+        return view('pages.coming-soon');
+    }
+
+    public function notfound() {
+        return view('pages.404');
+    }
+
+    public function portfolio() {
+        return view('pages.portfolio');
+    }
+
+    public function portfolioSingle() {
+        return view('pages.portfolio-single');
+    }
+
 }
