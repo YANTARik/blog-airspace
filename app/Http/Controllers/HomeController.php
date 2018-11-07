@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
 use App\Comment;
+use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class HomeController extends Controller
 {
@@ -13,12 +15,6 @@ class HomeController extends Controller
     public function index() {
 
         return view('pages.index');
-    }
-
-    public function show($slug) {
-        $post = Post::where('slug', $slug)->firstOrFail();
-
-        return view('pages.show', compact('post'));
     }
 
     public function tag($slug) {
@@ -53,6 +49,18 @@ class HomeController extends Controller
 
     public function portfolioSingle() {
         return view('pages.portfolio-single');
+    }
+
+    public function blogGrid() {
+        $posts = Post::paginate(6);
+
+        return view('pages.blog-grid')->with('posts', $posts);
+    }
+
+    public function show($slug) {
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        return view('pages.blog-single', compact('post'));
     }
 
 }

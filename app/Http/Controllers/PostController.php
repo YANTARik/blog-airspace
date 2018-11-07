@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -21,6 +22,8 @@ class PostController extends Controller
         return view('pages.posts.create', compact(
             'tags'
         ));
+
     }
+
 
 }

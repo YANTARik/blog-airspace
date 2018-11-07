@@ -27,4 +27,8 @@ Route::get('/coming-soon', 'HomeController@comingSoon');
 Route::get('/404', 'HomeController@notfound');
 Route::get('/portfolio', 'HomeController@portfolio');
 Route::get('/portfolio-single', 'HomeController@portfolioSingle');
+Route::get('/blog-grid', 'HomeController@blogGrid');
+Route::get('/post/{slug}', 'HomeController@show')->name('post.show');
+Route::get('/tag/{slug}', 'HomeController@tag')->name('tag.show');
+Route::post('/comment', 'CommentsController@store');
 

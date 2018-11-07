@@ -14,6 +14,8 @@ class Post extends Model
     protected $fillable = ['title', 'content', 'date', 'description'];
 
     public function author() {
+
+
         return $this->belongsTo(
             User::class,
             'user_id'
@@ -78,7 +80,7 @@ class Post extends Model
 
     public function getImage() {
         if ($this->image == null) {
-            return '/img/no-image.png';
+            return '/images/blog-post-2.jpg';
         }
         return '/uploads/' . $this->image;
     }
@@ -102,6 +104,10 @@ class Post extends Model
         return (!$this->tags->isEmpty())
             ? implode(', ', $this->tags->pluck('title')->all())
             : 'No tags';
+    }
+
+    public function getDate() {
+        return Carbon::createFromFormat('Y-m-d', $this->attributes['date'])->format('F d, Y');
     }
 
     public function getComments() {

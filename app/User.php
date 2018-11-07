@@ -82,9 +82,9 @@ class User extends Authenticatable
         $this->delete();
     }
 
-    public function getImage() {
+    public function getAvatar() {
         if ($this->avatar == null) {
-            return '/img/no-user-image.png';
+            return '/images/no-user-image.jpg';
         }
         return '/uploads/' . $this->avatar;
     }

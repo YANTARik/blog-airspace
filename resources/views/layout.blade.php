@@ -89,11 +89,11 @@
             <div class="col-md-12">
                 <div class="footer-manu">
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact us</a></li>
-                        <li><a href="#">How it works</a></li>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">Terms</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact us</a></li>
+                        <li><a href="/">How it works</a></li>
+                        <li><a href="/support">Support</a></li>
+                        <li><a href="/">Terms</a></li>
                     </ul>
                 </div>
                 <p class="copyright">Copyright 2018 &copy; Design & Developed by <a href="http://www.themefisher.com">themefisher.com</a>. All rights reserved.
