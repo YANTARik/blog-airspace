@@ -27,7 +27,7 @@
                                     <i class="ion-calendar"></i> 20, MAR 2017
                                 </li>
                                 <li>
-                                    <i class="ion-android-people"></i> POSTED BY ADMIN
+                                    <i class="ion-android-people"></i> POSTED BY {{ $post->author->name }}
                                 </li>
                                 <li>
                                     @foreach($post->tags as $tag)
@@ -46,8 +46,9 @@
                             {!! $post->content !!}
                         </div>
 
+                        @if(!$post->comments->isEmpty())
                         <div class="post-comments">
-                            <h3 class="post-sub-heading">10 Comments</h3>
+                            <h3 class="post-sub-heading">{{ $post->getComments()->count() }} Comments</h3>
                             <ul class="media-list comments-list m-bot-50 clearlist">
                                 <!-- Comment Item start-->
                                 @foreach($post->getComments() as $comment)
@@ -77,7 +78,10 @@
                                 <!-- End Comment Item -->
                             </ul>
                         </div>
+                        @endif
 
+
+                        @if(Auth::check())
                         <div class="post-comments-form">
                             <h3 class="post-sub-heading">Leave You Comments</h3>
 
@@ -87,25 +91,9 @@
                                 <input type="hidden" name="post_id" value="{{$post->id}}">
                                 <div class="row">
 
-                                    <div class="col-md-6 form-group">
-                                        <!-- Name -->
-                                        <input type="text" name="name" id="name" class=" form-control" placeholder="Name *" maxlength="100" required="">
-                                    </div>
-
-                                    <div class="col-md-6 form-group">
-                                        <!-- Email -->
-                                        <input type="email" name="email" id="email" class=" form-control" placeholder="Email *" maxlength="100" required="">
-                                    </div>
-
-
-                                    <div class="form-group col-md-12">
-                                        <!-- Website -->
-                                        <input type="text" name="website" id="website" class=" form-control" placeholder="Website" maxlength="100">
-                                    </div>
-
                                     <!-- Comment -->
                                     <div class="form-group col-md-12">
-                                        <textarea name="text" id="text" class=" form-control" rows="6" placeholder="Comment" maxlength="400"></textarea>
+                                        <textarea name="message" id="text" class=" form-control" rows="6" placeholder="Comment" maxlength="400"></textarea>
                                     </div>
 
                                     <!-- Send Button -->
@@ -120,7 +108,7 @@
 
                             </form>
                         </div>
-
+                        @endif
 
                     </div>
 

@@ -30,5 +30,19 @@ Route::get('/portfolio-single', 'HomeController@portfolioSingle');
 Route::get('/blog-grid', 'HomeController@blogGrid');
 Route::get('/post/{slug}', 'HomeController@show')->name('post.show');
 Route::get('/tag/{slug}', 'HomeController@tag')->name('tag.show');
-Route::post('/comment', 'CommentsController@store');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/logout', 'AuthController@logout');
+    Route::get('/profile', 'ProfileController@index');
+    Route::post('/profile', 'ProfileController@store');
+    Route::post('/comment', 'CommentsController@store');
+});
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/register', 'AuthController@registerForm');
+    Route::post('/register', 'AuthController@register');
+    Route::get('/login', 'AuthController@loginForm');
+    Route::post('/login', 'AuthController@login')->name('login');
+});
+
 

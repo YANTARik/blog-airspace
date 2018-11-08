@@ -70,6 +70,13 @@
                                     </ul>
                                 </li>
                                 <li><a href="/contact">Contact</a></li>
+                                <li>@if(Auth::check())
+                                    <li><a href="/profile">My profile</a></li>
+                                    <li><a href="/logout">Logout</a></li>
+                                @else
+                                    <li><a href="/register">Register</a></li>
+                                    <li><a href="/login">Login</a></li>
+                                    @endif</li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->

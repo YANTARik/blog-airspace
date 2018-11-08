@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class Comment extends Model
@@ -24,16 +26,12 @@ class Comment extends Model
         return $date;
     }
 
-    public function getAvatar() {
-
-     dd($comment->author);
-//        if ($this->avatar == null) {
-//            return '/images/no-user-image.jpg';
-//        }
-//        return '/uploads/' . $this->avatar;
-    }
-
     public function remove() {
         $this->delete();
+    }
+
+    public function related()
+    {
+        return self::all()->except($this->id);
     }
 }
