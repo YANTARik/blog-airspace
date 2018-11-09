@@ -32,7 +32,7 @@ Route::get('/post/{slug}', 'HomeController@show')->name('post.show');
 Route::get('/tag/{slug}', 'HomeController@tag')->name('tag.show');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/logout', 'AuthController@logout');
+    Route::get('/logout', 'Auth\LoginController@logout');
     Route::get('/profile', 'ProfileController@index');
     Route::post('/profile', 'ProfileController@store');
     Route::post('/comment', 'CommentController@store');
@@ -42,7 +42,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-    Route::post('/login', 'AuthController@login')->name('login');
+    Route::post('/login', 'Auth\LoginController@login')->name('login');
 });
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

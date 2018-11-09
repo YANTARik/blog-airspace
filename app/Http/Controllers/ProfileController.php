@@ -29,8 +29,7 @@ class ProfileController extends Controller
     	]);
 
     	$user = Auth::user();
-        dd($user);
-    	$user->edit($request->all());
+        $user->edit($request->all());
     	$user->generatePassword($request->get('password'));
     	$user->uploadAvatar($request->file('avatar'));
 
