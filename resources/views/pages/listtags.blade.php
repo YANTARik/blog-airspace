@@ -23,7 +23,7 @@
                                             <i class="ion-calendar"></i> {{$post->getDate()}}
                                         </li>
                                         <li>
-                                            <i class="ion-android-people"></i> POSTED BY Admin{{--{{$post->author->name}}--}}
+                                            <i class="ion-android-people"></i> POSTED BY {{$post->author->name}}
                                         </li>
                                         <li>
                                             @foreach($post->tags as $tag)

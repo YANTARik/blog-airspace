@@ -182,8 +182,8 @@
                                                 </ul>
                                         </div>
                                 </div>
-                                <div class="col-md-5 col-md-offset-1" style="height: 35% !important;">
-                                        @include('pages.comments')
+                                <div class="col-md-5 col-md-offset-1" style="height: 40% !important;">
+                                        @include('pages.comments', ['comments' => $comments])
                                 </div>
                         </div>
         </section>

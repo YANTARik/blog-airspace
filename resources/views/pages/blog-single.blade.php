@@ -86,16 +86,13 @@
                         @if(Auth::check())
                         <div class="post-comments-form">
                             <h3 class="post-sub-heading">Leave You Comments</h3>
-
-
-                            <form method="post" action="#" id="form" role="form" >
+                            <form method="post" action="/comment" id="form" role="form" >
                                 {{csrf_field()}}
                                 <input type="hidden" name="post_id" value="{{$post->id}}">
                                 <div class="row">
-
                                     <!-- Comment -->
                                     <div class="form-group col-md-12">
-                                        <textarea name="message" id="text" class=" form-control" rows="6" placeholder="Comment" maxlength="400"></textarea>
+                                        <textarea name="message" id="text" class="form-control" rows="6" placeholder="Comment" maxlength="400"></textarea>
                                     </div>
 
                                     <!-- Send Button -->
@@ -105,11 +102,14 @@
                                         </button>
                                     </div>
 
-
                                 </div>
 
                             </form>
                         </div>
+                        @else
+                            <div class="post-comments-form">
+                                <h3 class="post-sub-heading">Для того чтобы оставить комментарий необходимо авторизироватся.</h3>
+                            </div>
                         @endif
 
                     </div>

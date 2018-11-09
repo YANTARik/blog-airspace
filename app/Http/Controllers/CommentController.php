@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comment;
+use Auth;
 
 class CommentController extends Controller
 {
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'message'	=>	'required'
         ]);
@@ -21,13 +23,5 @@ class CommentController extends Controller
 
         return redirect()->back()->with('status', 'Ваш комментарий будет скоро добавлен!');
     }
-
-    public function getAllComments()
-    {
-        $comments = Comment::all();
-        dd($comments);
-        return view('pages.comments', ['comments'	=>	$comments]);
-    }
-
 
 }

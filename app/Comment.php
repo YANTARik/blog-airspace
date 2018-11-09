@@ -14,8 +14,8 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function author() {
-       // dd($this->belongsTo(User::class, 'user_id'));
+    public function author()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
@@ -30,8 +30,4 @@ class Comment extends Model
         $this->delete();
     }
 
-    public function related()
-    {
-        return self::all()->except($this->id);
-    }
 }
