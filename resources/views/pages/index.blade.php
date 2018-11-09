@@ -182,26 +182,10 @@
                                                 </ul>
                                         </div>
                                 </div>
-
+                                <div class="col-md-5 col-md-offset-1" style="height: 35% !important;">
+                                        @include('pages.comments')
+                                </div>
                         </div>
-                </div><div class="col-md-5 col-md-offset-1">
-                        <div class="testimonial-carousel text-center">
-
-                                {{--<div  class="testimonial-slider owl-carousel">--}}
-                                        {{--@foreach($comment->getAllComments() as $item)--}}
-                                        {{--<div>--}}
-                                                {{--<i class="ion-quote"></i>--}}
-                                                {{--<p>{{$item->text}}</p>--}}
-                                                {{--<div class="user">--}}
-                                                        {{--<img src="/images/item-img1.jpg" alt="Pepole">--}}
-                                                        {{--<p><span>{{$item->author->name}}</span> CEO-Themefisher</p>--}}
-                                                {{--</div>--}}
-                                        {{--</div>--}}
-                                        {{--@endforeach--}}
-
-                                {{--</div>--}}
-                        </div>
-                </div>
         </section>
 
 

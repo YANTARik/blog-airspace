@@ -50,13 +50,13 @@
                                 </li>
                                 <li><a href="/service">Service</a></li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="ion-ios-arrow-down"></span></a>
+                                    <a href="/blog-grid">Blog </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/blog-grid">Blog Grid</a></li>
-                                        <li><a href="/blog-single">Blog Single</a></li>
-                                        <li><a href="/blog-right-sidebar">Blog Right Sidebar</a></li>
-                                        <li><a href="/blog-left-sidebar">Blog Left Sidebar</a></li>
-                                        <li><a href="/blog-full-width">Blog Full Width</a></li>
+                                        {{--<li><a href="/blog-grid">Blog Grid</a></li>--}}
+                                        {{--<li><a href="/blog-single">Blog Single</a></li>--}}
+                                        {{--<li><a href="/blog-right-sidebar">Blog Right Sidebar</a></li>--}}
+                                        {{--<li><a href="/blog-left-sidebar">Blog Left Sidebar</a></li>--}}
+                                        {{--<li><a href="/blog-full-width">Blog Full Width</a></li>--}}
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -116,33 +116,31 @@
 Essential Scripts
 =====================================-->
 
-<!-- <script src="js/jquery.counterup.js"></script> -->
-
-<!-- Main jQuery -->
-
-<script src="https://code.jquery.com/jquery-git.min.js"></script>
+<script src="http://code.jquery.com/jquery-git.min.js"></script>
+<!-- Bootstrap 3.1 -->
+<script src="/js/bootstrap/js/bootstrap.min.js"></script>
+<!-- Owl Carousel -->
+<script src="/js/slick-carousel/slick/slick.min.js"></script>
+<!--  -->
+<script src="/js/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+<!-- Mixit Up JS -->
+<script src="/js/mixitup/dist/mixitup.min.js"></script>
+<!-- <script src="plugins/count-down/jquery.lwtCountdown-1.0.js"></script> -->
+<script src="/js/SyoTimer/build/jquery.syotimer.min.js"></script>
 
 
 <!-- Form Validator -->
-{{--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>--}}
-{{--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
 
 
 <!-- Google Map -->
+<script src="/js/google-map/map.js"></script>
 {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>--}}
 
-<script type="text/javascript" src="/js/blog.js"></script>
-<script>
-//    $(document).ready(function (){
-////        $("#example1").DataTable();
-////        $(".select2").select2();
-//        //Date picker
-//        $('#datepicker').datepicker({
-//            autoclose: true,
-//            format: 'dd/mm/yy'
-//        });
-//    });
-</script>
+<script src="/js/script.js"></script>
+{{--<script src="/js/blog.js"></script>--}}
+
 </body>
 </html>

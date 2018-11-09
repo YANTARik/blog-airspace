@@ -21,4 +21,13 @@ class CommentController extends Controller
 
         return redirect()->back()->with('status', 'Ваш комментарий будет скоро добавлен!');
     }
+
+    public function getAllComments()
+    {
+        $comments = Comment::all();
+        dd($comments);
+        return view('pages.comments', ['comments'	=>	$comments]);
+    }
+
+
 }

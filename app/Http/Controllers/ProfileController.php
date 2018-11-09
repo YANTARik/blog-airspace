@@ -29,10 +29,36 @@ class ProfileController extends Controller
     	]);
 
     	$user = Auth::user();
+        dd($user);
     	$user->edit($request->all());
     	$user->generatePassword($request->get('password'));
     	$user->uploadAvatar($request->file('avatar'));
 
     	return redirect()->back()->with('status', 'Профиль успешно обновлен');
+    }
+
+    public function edit($id) {
+        $user = User::find($id);
+        return view('pages.profile', compact('user'));
+    }
+
+    public function update(Request $request, $id) {
+        $user = User::find($id);
+
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'avatar' => 'nullable|image',
+        ]);
+
+        $user->edit($request->all()); //name,email
+        $user->generatePassword($request->get('password'));
+        $user->uploadAvatar($request->file('avatar'));
+
+        return redirect()->back();
     }
 }

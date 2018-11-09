@@ -24,11 +24,13 @@
                         <div class="post-meta">
                             <ul>
                                 <li>
-                                    <i class="ion-calendar"></i> 20, MAR 2017
+                                    <i class="ion-calendar"></i> {{$post->getDate()}}
                                 </li>
+
                                 <li>
                                     <i class="ion-android-people"></i> POSTED BY {{ $post->author->name }}
                                 </li>
+
                                 <li>
                                     @foreach($post->tags as $tag)
                                         <a href="{{route('tag.show', $tag->slug)}}" class="ion-pricetags">{{ $tag->title }}</a>

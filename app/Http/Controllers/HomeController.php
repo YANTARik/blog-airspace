@@ -12,10 +12,12 @@ class HomeController extends Controller
     public function index() {
         return view('pages.index');
     }
+
+
     public function tag($slug) {
         $tag = Tag::where('slug', $slug)->firstOrFail();
-        $post = $tag->posts()->paginate(2);
-        return view('pages.list', ['post' => $posts]);
+        $posts = $tag->posts()->paginate(2);
+        return view('pages.listtags', ['posts' => $posts]);
     }
     public function service() {
         return view('pages.service');
@@ -47,10 +49,7 @@ class HomeController extends Controller
         return view('pages.blog-single', compact('post'));
     }
 
-    public function getAllComments()
-    {
-        $comments = Comment::all();
 
-        return view('pages.index', ['comments'	=>	$comments]);
-    }
+
+
 }
