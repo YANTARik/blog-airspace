@@ -54,6 +54,7 @@ class User extends Authenticatable
     }
 
     public function edit($fields) {
+        dd($fields);
         $this->fill($fields);
 
         $this->save();

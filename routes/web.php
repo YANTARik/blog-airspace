@@ -49,4 +49,11 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::get('/', 'DashboardController@index');
+    Route::resource('/tags', 'TagsController');
+    Route::resource('/users', 'UsersController');
+    Route::resource('/posts', 'PostsController');
+    Route::get('/comments', 'CommentsController@index');
+    Route::delete('/comments/{id}/destroy', 'CommentsController@destroy')->name('comments.destroy');
+});

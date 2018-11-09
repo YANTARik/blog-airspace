@@ -99,18 +99,26 @@ class Post extends Model
         $this->attributes['date'] = $date;
     }
 
-    public function getTagsTitles() {
-
+    public function getTagsTitles()
+    {
         return (!$this->tags->isEmpty())
             ? implode(', ', $this->tags->pluck('title')->all())
             : 'No tags';
     }
 
-    public function getDate() {
+    public function getDate()
+    {
         return Carbon::createFromFormat('Y-m-d', $this->attributes['date'])->format('F d, Y');
     }
 
     public function getComments() {
         return $this->comments()->get();
+    }
+
+    public function setTags($ids)
+    {
+        if($ids == null){return;}
+
+        $this->tags()->sync($ids);
     }
 }
