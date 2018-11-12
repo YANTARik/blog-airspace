@@ -27,9 +27,9 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="form-group">
-                <a href="create.html" class="btn btn-success">Добавить</a>
-              </div>
+              {{--<div class="form-group">--}}
+                {{--<a href="{{route('posts.create')}}" class="btn btn-success">Добавить</a>--}}
+              {{--</div>--}}
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -45,16 +45,11 @@
                   <td>{{$comment->text}}
                   </td>
                   <td>
-                  	@if($comment->status == 1)
-                  		<a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-lock"></a>
-                  	@else
-						<a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-thumbs-o-up"></a>
-                  	@endif
-                  		{{Form::open(['route'=>['comments.destroy', $comment->id], 'method'=>'delete'])}}
-		                  <button onclick="return confirm('are you sure?')" type="submit" class="delete">
+                  	{{Form::open(['route'=>['comments.destroy', $comment->id], 'method'=>'delete'])}}
+		                  <button onclick="return confirm('are yo#u sure?')" type="submit" class="delete">
 		                   <i class="fa fa-remove"></i>
 		                  </button>
-	                   {{Form::close()}}
+                    {{Form::close()}}
                   </td>
                 </tr>
                 @endforeach

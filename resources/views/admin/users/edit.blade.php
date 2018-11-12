@@ -33,6 +33,10 @@
               <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="" value="{{$user->name}}">
             </div>
             <div class="form-group">
+              <label for="exampleInputEmail1">Фаминия</label>
+              <input type="text" class="form-control" name="lastname" id="exampleInputEmail1" placeholder="" value="{{$user->lastname}}">
+            </div>
+            <div class="form-group">
               <label for="exampleInputEmail1">E-mail</label>
               <input type="text" class="form-control" name="email" id="exampleInputEmail1" placeholder="" value="{{$user->email}}">
             </div>
@@ -41,11 +45,9 @@
               <input type="password" class="form-control" name="password" id="exampleInputEmail1" placeholder="">
             </div>
             <div class="form-group">
-              <img src="{{$user->getImage()}}" alt="" width="200" name="avatar" class="img-responsive">
+              <img src="{{$user->getAvatar()}}" alt="" width="200" name="avatar" class="img-responsive">
               <label for="exampleInputFile">Аватар</label>
               <input type="file" id="exampleInputFile">
-
-              <p class="help-block">Какое-нибудь уведомление о форматах..</p>
             </div>
         </div>
       </div>

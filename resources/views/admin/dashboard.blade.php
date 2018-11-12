@@ -10,6 +10,11 @@
             <small>приятные слова..</small>
         </h1>
     </section>
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <!-- Main content -->
     <section class="content">
