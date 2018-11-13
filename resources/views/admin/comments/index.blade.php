@@ -28,7 +28,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               {{--<div class="form-group">--}}
-                {{--<a href="{{route('posts.create')}}" class="btn btn-success">Добавить</a>--}}
+{{--                <a href="{{route('comments.create')}}" class="btn btn-success">Добавить</a>--}}
               {{--</div>--}}
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -53,8 +53,7 @@
                   </td>
                 </tr>
                 @endforeach
-                </tfoot>
-              </table>
+                </table>
             </div>
             <!-- /.box-body -->
           </div>
