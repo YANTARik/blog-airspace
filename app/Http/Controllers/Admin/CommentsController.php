@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Comment;
+use App\User;
+use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,16 +17,23 @@ class CommentsController extends Controller
 
     public function create()
     {
-        return view('admin.comments.create');
+        $users = User::pluck('name', 'id')->all();
+        $posts = Post::pluck('title', 'id')->all();
+
+        return view('admin.comments.create', compact(
+            'users',
+            'posts'
+        ));
     }
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'text' =>  'required' //обязательно
-        ]);
+        //dd($request->all());
+//        $this->validate($request, [
+//            'text' =>  'required' //обязательно
+//        ]);
 
-        Comment::create($request->all());
+        Comment::add($request->all());
         return redirect()->route('comments.index');
     }
 

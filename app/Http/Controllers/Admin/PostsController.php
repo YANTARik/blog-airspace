@@ -26,7 +26,7 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         $this->validate($request, [
             'title' => 'required',
             'content' => 'required',
@@ -44,6 +44,7 @@ class PostsController extends Controller
 
     public function edit($id)
     {
+        //dd($id);
         $post = Post::find($id);
         $tags = Tag::pluck('title', 'id')->all();
         $selectedTags = $post->tags->pluck('id')->all();
@@ -53,15 +54,16 @@ class PostsController extends Controller
             'post',
             'selectedTags'
         ));
+
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' =>'required',
-            'content'   =>  'required',
-            'date'  =>  'required',
-            'image' =>  'nullable|image'
+            'title' => 'required',
+            'content' => 'required',
+            'date' => 'required',
+            'image' => 'nullable|image',
         ]);
 
         $post = Post::find($id);
