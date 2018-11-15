@@ -7,6 +7,8 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="/css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+{{--  <script src="{{ asset('js/app.js') }}" defer></script>--}}
   <style>
       table.table form
       {
@@ -65,7 +67,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        {{--<img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">--}}
                       </div>
                       <h4>
                         Support Team
@@ -136,7 +138,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           {{--<li class="dropdown user user-menu">--}}
             {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}
-              {{--<img src="{{$user->getAvatar()}}" class="user-image" alt="User Image">--}}
+              {{--<img src="{{$user->getImage()}}" class="user-image" alt="User Image">--}}
               {{--<span class="hidden-xs">{{$user->name}}</span>--}}
             {{--</a>--}}
             {{--<ul class="dropdown-menu">--}}
@@ -217,8 +219,6 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- =============================================== -->
-
   <!-- Content Wrapper. Contains page content -->
   @yield('content')
   <!-- /.content-wrapper -->
@@ -240,8 +240,9 @@
 
 <script src="/js/admin.js"></script>
 
-<script src="/plugins/ckeditor/ckeditor.js"></script>
-<script src="/plugins/ckfinder/ckfinder.js"></script>
+<script src="/js/ckeditor/ckeditor.js"></script>
+<script src="/js/ckfinder/ckfinder.js"></script>
+
 
 <script>
     $(document).ready(function(){
@@ -261,5 +262,10 @@ $(document).ready(function (){
     });
 });
 </script>
+
+<script src="{{ mix('js/app.js') }}"></script>
+
+@stack('scripts')
+
 </body>
 </html>
