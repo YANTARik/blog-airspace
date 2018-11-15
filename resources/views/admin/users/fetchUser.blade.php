@@ -25,9 +25,9 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    {{--<div class="form-group">--}}
-                        {{--<a href="{{route('users.create')}}" class="btn btn-success">Добавить</a>--}}
-                    {{--</div>--}}
+                    <div class="form-group">
+                    <a href="{{route('users.create')}}" class="btn btn-success">Добавить</a>
+                    </div>
 
                     <div id="UserController">
                         <router-view></router-view>

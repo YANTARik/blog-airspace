@@ -9,5 +9,11 @@ const app = new Vue({
     el: '#UserController',
     template: `<app></app>`,
     components: { App },
+    data: {
+        items: [],
+        item: {name: '',},
+        edit: false,
+        editIndex:-1
+    },
     router
 })

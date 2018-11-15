@@ -7,6 +7,7 @@ export function get( ) {
             .get('/api/admin/users')
             .then(response => {
             this.loading = false;
+            console.log('hello')
         this.users = response.data;
             }).catch(error => {
                     this.loading = false;

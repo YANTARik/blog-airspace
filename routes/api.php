@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'api.'], function () {
-    //Route::resource('/users', 'UsersController', ['except' => ['create', 'edit']]);
+    //Route::resource('/users', 'UsersController');
     Route::get('/users', 'UsersController@fetchUsers');
+//    Route::delete('/users/{:id}', 'UsersController@destroy');
+//    Route::post('/users', 'UsersController@create');
 });

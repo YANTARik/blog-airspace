@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 
 
 import UsersIndex from '../components/users/Users.vue'
-import UsersForm from '../components/users/UsersForm.vue'
+//import UsersForm from '../components/users/UsersForm.vue'
 
 
 
