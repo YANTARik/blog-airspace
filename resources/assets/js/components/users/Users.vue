@@ -26,16 +26,19 @@
                 </td>
                 <td>
 
-                    <a href="{{route('users.edit', user->id)}}" class="fa fa-pencil"></a>
-                    {{Form::open(['route'=>['users.destroy', user->id], 'method'=>'delete'])}}
-                    <button onclick="return confirm('are you sure?')" type="submit" class="delete">
-                        <i class="fa fa-remove"></i>
-                    </button>
+                    <!--<a href="{{route('users.edit', user->id)}}" class="fa fa-pencil"></a>-->
+                    <!--{{Form::open(['route'=>['users.destroy', user->id], 'method'=>'delete'])}}-->
+                    <!--&lt;!&ndash;<button onclick="return confirm('are you sure?')" type="submit" class="delete">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<i class="fa fa-remove"></i>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                    <!--<a href="{{route('users.destroy', user->id)}}" class="fa fa-remove"></a>-->
+                    <!--{{Form::close()}}-->
+                    <router-link :to="`/users/edit/${user.id}`" class="fa fa-pencil">
 
-                    {{Form::close()}}
-                    <!--<router-link :to="`/users/edit/${user.id}`" class="btn btn-primary">-->
-                        <!--Edit-->
-                    <!--</router-link>-->
+                    </router-link>
+                    <router-link :to="`/users/destroy/${user.id}`" class="fa fa-remove">
+
+                    </router-link>
                     <!--<button class="btn btn__danger" @click="$emit('delete-user', user)" >Delete</button>-->
                 </td>
             </tr>

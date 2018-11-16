@@ -51,7 +51,7 @@ class UsersController extends Controller
         $user = User::add( $request->all() );
         $user->uploadAvatar( $request->file( 'avatar' ) );
         //dd($user);
-        return $user;
+        return view( 'admin.users.fetchUser');
     }
 
     public function edit($id)
@@ -80,7 +80,7 @@ class UsersController extends Controller
         $user->uploadAvatar($request->file('avatar'));
 
         //return redirect()->route('users.index');
-        return $user;
+        return view( 'admin.users.fetchUser');
     }
 
     public function destroy($id)
