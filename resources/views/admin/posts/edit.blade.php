@@ -14,11 +14,11 @@
 
     <!-- Main content -->
     <section class="content">
-    {{Form::open([
-      'route'	=>	['posts.update', $post->id],
-      'files'	=>	true,
-      'method'	=>	'put'
-    ])}}
+      {{Form::open([
+          'route' => ['posts.update', $post->id],
+          'files' => true,
+          'method' => 'put'
+          ])}}
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
@@ -35,7 +35,7 @@
             <div class="form-group">
               <img src="{{$post->getImage()}}" alt="" class="img-responsive" width="200">
               <label for="exampleInputFile">Лицевая картинка</label>
-              <input type="file" id="exampleInputFile" name="image">
+              <input type="file" id="exampleInputFile">
 
               <p class="help-block">Какое-нибудь уведомление о форматах..</p>
             </div>

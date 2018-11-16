@@ -17,7 +17,7 @@
 
             <!-- Default box -->
             <div class="box">
-                {!! Form::open(['route' => 'comments.store']) !!}
+                {!! Form::open(['route' => 'с.store']) !!}
                 <div class="box-header with-border">
                     <h3 class="box-title">Добавляем комментарий</h3>
                     @include('admin.errors')
@@ -26,24 +26,8 @@
                 <div class="box-body">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Статья</label>
-                            {{Form::select('post_id',
-                                $posts,
-                                null,
-                                ['class' => 'form-control select2','data-placeholder'=>'Выберите статью'])
-                            }}
-                        </div>
-                        <div class="form-group">
                             <label for="exampleInputEmail1">Комментарий</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="" name="text">
-                        </div>
-                        <div class="form-group">
-                            <label>Автор</label>
-                            {{Form::select('user_id',
-                                $users,
-                                null,
-                                ['class' => 'form-control select2', 'data-placeholder'=>'Выберите теги', 'data-placeholder'=>'Выберите автора'])
-                            }}
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="" name="message">
                         </div>
                     </div>
                 </div>

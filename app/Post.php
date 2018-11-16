@@ -69,12 +69,12 @@ class Post extends Model
     }
 
     public function uploadImage($image) {
-        //dd($image);
+        dd($image);
         if ($image == null) {return;}
 
         $this->removeImage();
         $filename = str_random(10) . '.' . $image->extension();
-        $image->storeAs('uploads', $filename);
+        $image->saveAs('uploads', $filename);
         $this->image = $filename;
         $this->save();
     }

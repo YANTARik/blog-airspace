@@ -14,7 +14,7 @@
     <!-- Main content -->
     <section class="content">
     {{Form::open([
-        'route' => 'posts.create',
+        'route' => 'posts.store',
         'files' => true,
         'method' => 'put'
         ])}}

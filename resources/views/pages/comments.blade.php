@@ -6,7 +6,7 @@
                 <i class="ion-quote"></i>
                 <p>{{$comment->text}}</p>
                 <div class="user">
-                    <img src="{{$comment->author->getImage()}}" alt="Pepole">
+                    <img src="{{$comment->author->getAvatar()}}" alt="Pepole">
                     <p><span>{{$comment->author->name}}</span> CEO-Themefisher</p>
                 </div>
             </div>
