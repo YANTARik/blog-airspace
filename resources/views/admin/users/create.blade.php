@@ -28,10 +28,6 @@
               <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="" value="{{old('name')}}">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail1">Фамилия</label>
-              <input type="text" class="form-control" name="lastname" id="exampleInputEmail1" placeholder="" value="{{old('lastname')}}">
-            </div>
-            <div class="form-group">
               <label for="exampleInputEmail1">E-mail</label>
               <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="" value="{{old('email')}}">
             </div>

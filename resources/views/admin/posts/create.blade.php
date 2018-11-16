@@ -13,7 +13,11 @@
 
     <!-- Main content -->
     <section class="content">
-        {{Form::open(['route' => 'posts.store','files' => true,'method' => 'put'])}}
+        {{Form::open([
+            'route' => 'posts.store',
+            'files' => true,
+            'method' => 'put'
+            ])}}
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
@@ -33,7 +37,9 @@
             </div>
             <div class="form-group">
               <label>Теги</label>
-            {{Form::select('tags[]', $tags, null,
+            {{Form::select('tags[]',
+                $tags,
+                null,
                 ['class' => 'form-control select2', 'multiple' => 'multiple', 'data-placeholder' => 'Выберите теги'])
             }}
             </div>
