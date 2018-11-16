@@ -8,6 +8,7 @@
         <section class="content-header">
             <h1>
                 Добавить тег
+                <small>приятные слова..</small>
             </h1>
         </section>
 

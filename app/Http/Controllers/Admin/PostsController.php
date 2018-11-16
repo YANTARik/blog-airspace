@@ -26,12 +26,11 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required',
-            'date' => 'required',
-            'image' => 'nullable|image',
+            'title' =>'required',
+            'content'   =>  'required',
+            'date'  =>  'required',
+            'image' =>  'nullable|image'
         ]);
 
         $post = Post::add($request->all());
@@ -39,7 +38,6 @@ class PostsController extends Controller
         $post->setTags($request->get('tags'));
 
         return redirect()->route('posts.index');
-
     }
 
     public function edit($id)

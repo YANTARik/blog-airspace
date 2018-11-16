@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use \Storage;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'lastname', 'email',
+        'name', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -40,6 +40,7 @@ class User extends Authenticatable
     public static function add($fields) {
         $user = new static;
         $user->fill($fields);
+        $user->password = bcrypt($fields['password']);
         $user->save();
 
         return $user;
@@ -59,15 +60,15 @@ class User extends Authenticatable
         $this->save();
     }
 
-    public function uploadAvatar($image)
-    {
+    public function uploadAvatar($image) {
         if ($image == null) {return;}
 
         $this->removeAvatar();
-        //dd(get_class_methods($image));
+
         $filename = str_random(10) . '.' . $image->extension();
 
         $image->storeAs('uploads', $filename);
+        dd($image->storeAs('uploads', $filename));
 
         $this->avatar = $filename;
         $this->save();
@@ -85,13 +86,10 @@ class User extends Authenticatable
         $this->delete();
     }
 
-    public function getImage()
-    {
-        if($this->avatar == null)
-        {
-            return '/images/no-user-image.png';
+    public function getAvatar() {
+        if ($this->avatar == null) {
+            return '/images/no-user-image.jpg';
         }
-
         return '/uploads/' . $this->avatar;
     }
 

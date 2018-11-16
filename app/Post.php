@@ -69,7 +69,6 @@ class Post extends Model
     }
 
     public function uploadImage($image) {
-        dd($image);
         if ($image == null) {return;}
 
         $this->removeImage();

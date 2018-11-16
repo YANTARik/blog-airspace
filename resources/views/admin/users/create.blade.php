@@ -24,12 +24,12 @@
         <div class="box-body">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="exampleInputEmail1">Фамилия</label>
-              <input type="text" class="form-control" name="lastname" id="exampleInputEmail1" placeholder="" value="{{old('lastname')}}">
-            </div>
-            <div class="form-group">
               <label for="exampleInputEmail1">Имя</label>
               <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="" value="{{old('name')}}">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Фамилия</label>
+              <input type="text" class="form-control" name="lastname" id="exampleInputEmail1" placeholder="" value="{{old('lastname')}}">
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">E-mail</label>

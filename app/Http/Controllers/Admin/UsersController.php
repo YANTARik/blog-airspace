@@ -22,7 +22,6 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $this->validate( $request, [
             'name'=>'required',
             'lastname'=>'required',
@@ -32,37 +31,38 @@ class UsersController extends Controller
         ] );
 
         $user = User::add( $request->all() );
+        $user->generatePassword( $request->get( 'password' ) );
         $user->uploadAvatar( $request->file( 'avatar' ) );
-        //dd($user);
+
         return redirect()->route( 'users.index' );
     }
 
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('admin.users.edit', compact('user'));
+        $user=User::find( $id );
+        return view( 'admin.users.edit', compact( 'user' ) );
     }
 
     public function update(Request $request, $id)
     {
-        //dd($request->all());
-        $user = User::find($id);
+        $user=User::find( $id );
 
-        $this->validate($request, [
-            'name'  =>  'required',
-            'email' =>  [
+        $this->validate( $request, [
+            'name'=>'required',
+            'lastname'=>'required',
+            'email'=>[
                 'required',
                 'email',
-                Rule::unique('users')->ignore($user->id),
+                Rule::unique( 'users' )->ignore( $user->id ),
             ],
-            'avatar'    =>  'nullable|image'
-        ]);
+            'avatar'=>'nullable|image'
+        ] );
 
-        $user->edit($request->all()); //name,email
-        $user->generatePassword($request->get('password'));
-        $user->uploadAvatar($request->file('avatar'));
+        $user->edit( $request->all() ); //name, last,email
+        $user->generatePassword( $request->get( 'password' ) );
+        $user->uploadAvatar( $request->file( 'avatar' ) );
 
-        return redirect()->route('users.index');
+        return redirect()->route( 'users.index' );
     }
 
     public function destroy($id)

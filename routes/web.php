@@ -54,6 +54,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::resource('/tags', 'TagsController');
     Route::resource('/users', 'UsersController');
     Route::resource('/posts', 'PostsController');
-    Route::resource('/comments', 'CommentsController');
+    Route::get('/comments', 'CommentsController@index');
     Route::delete('/comments/{id}/destroy', 'CommentsController@destroy')->name('comments.destroy');
 });
