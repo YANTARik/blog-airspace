@@ -12,24 +12,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-//        //return User::all();
-//        return view( 'admin.users.index', compact('users') );
-        return view( 'admin.users.fetchUser');
-    }
-
-    public function fetchUsers()
-    {
-        $users = User::all();
-
-        return response()
-            ->json([
-                'users' => $users,
-            ]);
-    }
-
-    public function show($id)
-    {
-        return User::findOrFail($id);
+        return view( 'admin.users.index', ['users' => $users] );
     }
 
     public function create()
@@ -39,7 +22,7 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         $this->validate( $request, [
             'name'=>'required',
             'lastname'=>'required',
@@ -51,7 +34,7 @@ class UsersController extends Controller
         $user = User::add( $request->all() );
         $user->uploadAvatar( $request->file( 'avatar' ) );
         //dd($user);
-        return $user;
+        return redirect()->route( 'users.index' );
     }
 
     public function edit($id)
@@ -79,16 +62,14 @@ class UsersController extends Controller
         $user->generatePassword($request->get('password'));
         $user->uploadAvatar($request->file('avatar'));
 
-        //return redirect()->route('users.index');
-        return $user;
+        return redirect()->route('users.index');
     }
 
     public function destroy($id)
     {
         User::find( $id )->remove();
 
-        //return redirect()->route( 'users.index' );
-        return '';
+        return redirect()->route( 'users.index' );
     }
 
 }

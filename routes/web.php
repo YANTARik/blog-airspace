@@ -52,8 +52,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/', 'DashboardController@index');
     Route::resource('/tags', 'TagsController');
-    //Route::resource('/users', 'UsersController');
-    Route::get('/users','UsersController@index')->name('users.index');
+    Route::resource('/users', 'UsersController');
     Route::resource('/posts', 'PostsController');
     Route::resource('/comments', 'CommentsController');
     Route::delete('/comments/{id}/destroy', 'CommentsController@destroy')->name('comments.destroy');
