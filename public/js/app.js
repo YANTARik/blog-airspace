@@ -1646,39 +1646,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1691,36 +1658,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         this.error = this.users = null;
+        this.loading = true;
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/admin/users').then(function (response) {
             _this.users = response.data.users;
         });
-    },
-
-    methods: {
-        //            createUser(){
-        //                axios
-        //                    .post('/api/admin/users/',this.user).then(responce => {
-        //                        this.user.push(responce.data.user);
-        //                        this.user={name:'', lastname:'', email:'', password:''};
-        //                        if (this.errors)
-        //                        {
-        //                            this.errors=[];
-        //                        }
-        //                        console.log(response.data)
-        //                    }, response => {
-        //                        this.errors = response.data.errors;
-        //                    });
-        //            },
-
-        deleteUser: function deleteUser(user) {
-            var _this2 = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/admin/users/' + user.id).then(function (responce) {
-                var index = _this2.users.indexOf(user);
-                _this2.users.splice(index, 1);
-                console.log(response.data);
-            });
-        }
     }
 });
 
@@ -2295,66 +2236,7 @@ module.exports = function normalizeComponent (
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f998e5a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/users/Users.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-bordered table-striped" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "tbody",
-      _vm._l(_vm.users, function(user) {
-        return _c("tr", [
-          _c("td", [_vm._v(_vm._s(user.id))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(user.name))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(user.lastname))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(user.email))]),
-          _vm._v(" "),
-          _c("td", [
-            user.avatar
-              ? _c("img", {
-                  staticStyle: { width: "75px", height: "75px" },
-                  attrs: { src: "/uploads/" + user.avatar }
-                })
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("td")
-        ])
-      })
-    ),
-    _vm._v(" "),
-    _c("tfoot")
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Имя")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Фамилия")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("E-mail")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Avatar")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Действия")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
+module.exports={render:function(){},staticRenderFns:[]}
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -16010,12 +15892,6 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#UserController',
     template: '<app></app>',
     components: { App: __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue___default.a },
-    data: {
-        items: [],
-        item: { name: '' },
-        edit: false,
-        editIndex: -1
-    },
     router: __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */]
 });
 
@@ -16078,11 +15954,11 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue__ = __webpack_require__("./resources/assets/js/components/users/Users.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue__);
+throw new Error("Cannot find module \"../components/users/UsersForm.vue\"");
 
 
 
 
-//import UsersForm from '../components/users/UsersForm.vue'
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);

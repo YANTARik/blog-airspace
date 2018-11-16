@@ -87,8 +87,8 @@ class UsersController extends Controller
     {
         User::find( $id )->remove();
 
-        return redirect()->route( 'users.fetchUsers' );
-//        return response()->json(['message' => 'Пользователь был удален.']);
+        //return redirect()->route( 'users.index' );
+        return '';
     }
 
 }
