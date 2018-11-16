@@ -1679,17 +1679,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2334,21 +2323,7 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c(
-            "td",
-            [
-              _c("router-link", {
-                staticClass: "fa fa-pencil",
-                attrs: { to: "/users/edit/" + user.id }
-              }),
-              _vm._v(" "),
-              _c("router-link", {
-                staticClass: "fa fa-remove",
-                attrs: { to: "/users/destroy/" + user.id }
-              })
-            ],
-            1
-          )
+          _c("td")
         ])
       })
     ),
