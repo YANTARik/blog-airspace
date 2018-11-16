@@ -1659,6 +1659,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1674,6 +1705,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/admin/users').then(function (response) {
             _this.users = response.data.users;
         });
+    },
+
+    methods: {
+        //            createUser(){
+        //                axios
+        //                    .post('/api/admin/users/',this.user).then(responce => {
+        //                        this.user.push(responce.data.user);
+        //                        this.user={name:'', lastname:'', email:'', password:''};
+        //                        if (this.errors)
+        //                        {
+        //                            this.errors=[];
+        //                        }
+        //                        console.log(response.data)
+        //                    }, response => {
+        //                        this.errors = response.data.errors;
+        //                    });
+        //            },
+
+        deleteUser: function deleteUser(user) {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/admin/users/' + user.id).then(function (responce) {
+                var index = _this2.users.indexOf(user);
+                _this2.users.splice(index, 1);
+                console.log(response.data);
+            });
+        }
     }
 });
 
@@ -2245,42 +2303,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0542fbf4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/users/UserModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("span", [_vm._v("dfdsfdf")]),
-      _vm._v(" "),
-      _c("script", { attrs: { type: "text/x-template", id: "userModal" } }, [
-        _vm._v(
-          '\n  <transition name="modal">\n    <div class="modal-mask">\n      <div class="modal-wrapper">\n        <div class="modal-container">\n\n          <div class="modal-header">\n            <slot name="header">\n              default header\n            </slot>\n          </div>\n\n          <div class="modal-body">\n            <slot name="body">\n              default body\n            </slot>\n          </div>\n\n          <div class="modal-footer">\n            <slot name="footer">\n              default footer\n              <button class="modal-default-button" @click="$emit(\'close\')">\n                OK\n              </button>\n            </slot>\n          </div>\n        </div>\n      </div>\n    </div>\n  </transition>\n'
-        )
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0542fbf4", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f998e5a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/users/Users.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2288,76 +2310,51 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "button",
-        {
-          attrs: { id: "show-modal" },
-          on: {
-            click: function($event) {
-              _vm.userModal = true
-            }
-          }
-        },
-        [_vm._v("Show Modal")]
-      ),
-      _vm._v(" "),
-      _vm.userModal
-        ? _c(
-            "modal",
-            {
-              on: {
-                close: function($event) {
-                  _vm.userModal = false
-                }
-              }
-            },
+  return _c("table", { staticClass: "table table-bordered table-striped" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "tbody",
+      _vm._l(_vm.users, function(user) {
+        return _c("tr", [
+          _c("td", [_vm._v(_vm._s(user.id))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(user.name))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(user.lastname))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(user.email))]),
+          _vm._v(" "),
+          _c("td", [
+            user.avatar
+              ? _c("img", {
+                  staticStyle: { width: "75px", height: "75px" },
+                  attrs: { src: "/uploads/" + user.avatar }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c(
+            "td",
             [
-              _c("h3", { attrs: { slot: "header" }, slot: "header" }, [
-                _vm._v("custom header")
-              ])
-            ]
+              _c("router-link", {
+                staticClass: "fa fa-pencil",
+                attrs: { to: "/users/edit/" + user.id }
+              }),
+              _vm._v(" "),
+              _c("router-link", {
+                staticClass: "fa fa-remove",
+                attrs: { to: "/users/destroy/" + user.id }
+              })
+            ],
+            1
           )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("userModal"),
-      _vm._v(" "),
-      _c("table", { staticClass: "table table-bordered table-striped" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.users, function(user) {
-            return _c("tr", [
-              _c("td", [_vm._v(_vm._s(user.id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.name))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.lastname))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.email))]),
-              _vm._v(" "),
-              _c("td", [
-                user.avatar
-                  ? _c("img", {
-                      staticStyle: { width: "75px", height: "75px" },
-                      attrs: { src: "/uploads/" + user.avatar }
-                    })
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("td")
-            ])
-          })
-        ),
-        _vm._v(" "),
-        _c("tfoot")
-      ])
-    ],
-    1
-  )
+        ])
+      })
+    ),
+    _vm._v(" "),
+    _c("tfoot")
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -16027,10 +16024,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue__ = __webpack_require__("./resources/assets/js/components/users/Users.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue__ = __webpack_require__("./resources/assets/js/components/users/UserModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__("./resources/assets/js/router/index.js");
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__("./resources/assets/js/router/index.js");
 
 
 
@@ -16040,66 +16034,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#UserController',
     template: '<app></app>',
-    components: {
-        App: __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue___default.a,
-        userModal: __WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue___default.a
-    },
+    components: { App: __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue___default.a },
     data: {
-        users: [],
-        userModal: false,
-        user: { name: '', lastname: '', email: '', password: '', avatar: '' },
-        edit: false
+        items: [],
+        item: { name: '' },
+        edit: false,
+        editIndex: -1
     },
-    router: __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */]
+    router: __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */]
 });
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/users/UserModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = null
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0542fbf4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/users/UserModal.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/users/UserModal.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0542fbf4", Component.options)
-  } else {
-    hotAPI.reload("data-v-0542fbf4", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
 
 /***/ }),
 
