@@ -27,16 +27,4 @@ class Comment extends Model
         return $date;
     }
 
-    public function remove() {
-        $this->delete();
-    }
-
-    public static function add($fields) {
-        $comment = new static;
-        $comment->fill($fields);
-        $comment->save();
-
-        return $comment;
-    }
-
 }

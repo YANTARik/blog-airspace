@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js([
-    'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
+    ///'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
     'resources/assets/plugins/slick-carousel/slick/slick.min.js',
     'resources/assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js',
     'resources/assets/plugins/mixitup/dist/mixitup.min.js',
@@ -23,7 +23,7 @@ mix.js([
 ], 'public/js/blog.js')
 
    .styles([
-       'resources/assets/plugins/bootstrap/css/bootstrap.min.css',
+       //'resources/assets/plugins/bootstrap/css/bootstrap.min.css',
        'resources/assets/plugins/animate-css/animate.css',
        'resources/assets/plugins/Ionicons/css/ionicons.min.css',
        'resources/assets/plugins/magnific-popup/dist/magnific-popup.css',

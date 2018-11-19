@@ -29,9 +29,9 @@ class CommentsController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
-//        $this->validate($request, [
-//            'text' =>  'required' //обязательно
-//        ]);
+        $this->validate($request, [
+            'text' =>  ['required', 'string', 'max:255']
+        ]);
 
         Comment::add($request->all());
         return redirect()->route('comments.index');
