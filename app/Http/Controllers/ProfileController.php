@@ -19,8 +19,8 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
     	$this->validate($request, [
-    		'name'	=>	'required',
-//            'last'	=>	'required',
+    		'name'	=>	['required', 'string', 'max:255'],
+            'lastname'	=>	['required', 'string', 'max:255'],
     		'email' =>  [
                 'required',
                 'email',
@@ -30,7 +30,7 @@ class ProfileController extends Controller
     	]);
 
     	$user = Auth::user();
-    	dd($request->all());
+    	//dd($request->all());
         $user->edit($request->all());
     	$user->generatePassword($request->get('password'));
     	$user->uploadAvatar($request->file('avatar'));
@@ -47,8 +47,8 @@ class ProfileController extends Controller
         $user = User::find($id);
 
         $this->validate($request, [
-            'name' => 'required',
-            'lastname'	=>	'required',
+            'name'	=>	['required', 'string', 'max:255'],
+            'lastname'	=>	['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'email',

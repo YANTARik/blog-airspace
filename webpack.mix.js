@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.scripts([
-    'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
+    //'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
     'resources/assets/plugins/slick-carousel/slick/slick.min.js',
     'resources/assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js',
     'resources/assets/plugins/mixitup/dist/mixitup.min.js',
@@ -40,7 +40,7 @@ mix.copy('resources/assets/css/maps', 'public/css/maps');
 
 
 mix.styles([
-    'resources/assets/admin/bootstrap/css/bootstrap.min.css',
+    //'resources/assets/admin/bootstrap/css/bootstrap.min.css',
     'resources/assets/admin/font-awesome/4.5.0/css/font-awesome.min.css',
     'resources/assets/admin/ionicons/2.0.1/css/ionicons.min.css',
     'resources/assets/admin/plugins/iCheck/minimal/_all.css',
@@ -52,8 +52,8 @@ mix.styles([
 ], 'public/css/admin.css');
 
 mix.scripts([
-    'resources/assets/admin/plugins/jQuery/jquery-2.2.3.min.js',
-    'resources/assets/admin/bootstrap/js/bootstrap.min.js',
+    // 'resources/assets/admin/plugins/jQuery/jquery-2.2.3.min.js',
+    // 'resources/assets/admin/bootstrap/js/bootstrap.min.js',
     'resources/assets/admin/plugins/select2/select2.full.min.js',
     'resources/assets/admin/plugins/datepicker/bootstrap-datepicker.js',
     'resources/assets/admin/plugins/datatables/jquery.dataTables.min.js',

@@ -59,26 +59,26 @@ class User extends Authenticatable
         $this->save();
     }
 
-    public function uploadAvatar($image)
-    {
-        if ($image == null) {return;}
-
-        $this->removeAvatar();
-        //dd(get_class_methods($image));
-        $filename = str_random(10) . '.' . $image->extension();
-
-        $image->storeAs('uploads', $filename);
-
-        $this->avatar = $filename;
-        $this->save();
-
-    }
-
-    public function removeAvatar() {
-        if ($this->avatar != null) {
-            Storage::delete('uploads/' . $this->avatar);
-        }
-    }
+//    public function uploadAvatar($image)
+//    {
+//        if ($image == null) {return;}
+//
+//        $this->removeAvatar();
+//        //dd(get_class_methods($image));
+//        $filename = str_random(10) . '.' . $image->extension();
+//
+//        $image->storeAs('uploads', $filename);
+//
+//        $this->avatar = $filename;
+//        $this->save();
+//
+//    }
+//
+//    public function removeAvatar() {
+//        if ($this->avatar != null) {
+//            Storage::delete('uploads/' . $this->avatar);
+//        }
+//    }
 
     public function remove() {
         $this->removeAvatar();

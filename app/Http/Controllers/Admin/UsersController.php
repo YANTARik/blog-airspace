@@ -27,11 +27,6 @@ class UsersController extends Controller
             ]);
     }
 
-    public function show($id)
-    {
-        return User::findOrFail($id);
-    }
-
     public function create()
     {
         return view( 'admin.users.create' );
@@ -41,8 +36,8 @@ class UsersController extends Controller
     {
         //dd($request->all());
         $this->validate( $request, [
-            'name'=>'required',
-            'lastname'=>'required',
+            'name'	=>	['required', 'string', 'max:255'],
+            'lastname'	=>	['required', 'string', 'max:255'],
             'email'=>'required|email|unique:users',
             'password'=>'required',
             'avatar'=>'nullable|image'
@@ -66,7 +61,8 @@ class UsersController extends Controller
         $user = User::find($id);
 
         $this->validate($request, [
-            'name'  =>  'required',
+            'name'	=>	['required', 'string', 'max:255'],
+            'lastname'	=>	['required', 'string', 'max:255'],
             'email' =>  [
                 'required',
                 'email',
@@ -89,6 +85,27 @@ class UsersController extends Controller
 
         return redirect()->route( 'users.fetchUsers' );
 //        return response()->json(['message' => 'Пользователь был удален.']);
+    }
+
+    public function uploadAvatar($image)
+    {
+        if ($image == null) {return;}
+
+        $this->removeAvatar();
+        //dd(get_class_methods($image));
+        $filename = str_random(10) . '.' . $image->extension();
+
+        $image->storeAs('uploads', $filename);
+
+        $this->avatar = $filename;
+        $this->save();
+
+    }
+
+    public function removeAvatar() {
+        if ($this->avatar != null) {
+            Storage::delete('uploads/' . $this->avatar);
+        }
     }
 
 }
