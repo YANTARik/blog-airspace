@@ -81,7 +81,7 @@ class User extends Authenticatable
 //    }
 
     public function remove() {
-        $this->removeAvatar();
+//        $this->removeAvatar();
         $this->delete();
     }
 

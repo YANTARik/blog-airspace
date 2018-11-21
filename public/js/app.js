@@ -1659,21 +1659,164 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
+
         return {
-            users: []
+            users: [],
+            hasError: true,
+            hasUpdated: true,
+            hasDeleted: true,
+            showModal: false,
+            u_lastname: '',
+            u_name: '',
+            u_id: '',
+            u_email: '',
+            u_avatar: '',
+            newUser: { 'lastname': '', 'name': '', 'email': '', 'avatar': '' }
+
         };
     },
     created: function created() {
-        var _this = this;
-
         this.error = this.users = null;
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/admin/users').then(function (response) {
-            _this.users = response.data.users;
-        });
+        this.fetchUsers();
+    },
+
+
+    methods: {
+
+        fetchUsers: function fetchUsers() {
+            var _this = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/admin/users').then(function (response) {
+                _this.users = response.data.users;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        createUser: function createUser() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users', this.newUser).then(function (response) {
+                _this2.user = response.data.user;
+                _this2.fetchUsers();
+                _this2.hasError = true;
+                _this2.hasUpdated = false;
+            }).catch(function (error) {
+                _this2.hasError = false;
+                console.log(error);
+            });
+            this.hasDeleted = true;
+        },
+        setVal: function setVal(val_id, val_lastname, val_name, val_email) {
+            this.u_id = val_id;
+            this.u_lastname = val_lastname;
+            this.u_name = val_name;
+            this.u_email = val_email;
+            //this.u_avatar = val_avatar;
+        },
+
+
+        editUser: function editUser() {
+            var _this3 = this;
+
+            var i_val_1 = document.getElementById('u_id');
+            var l_val_1 = document.getElementById('u_lastname');
+            var n_val_1 = document.getElementById('u_name');
+            var e_val_1 = document.getElementById('u_email');
+            //let a_val_1 = document.getElementById('u_avatar');
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/admin/users/' + i_val_1.value, {
+                lastname: l_val_1.value,
+                name: n_val_1.value,
+                email: e_val_1.value
+                //val_4: a_val_1.value
+            }).then(function (response) {
+                _this3.user = response.data.user;
+                _this3.fetchUsers();
+                _this3.hasUpdated = false;
+                _this3.showModal = false;
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            this.hasUpdated = true;
+        },
+        deleteUser: function deleteUser(user) {
+            var _this4 = this;
+
+            //console.log(user.id);
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/admin/users/' + user.id).then(function (response) {
+                _this4.fetchUsers();
+                _this4.hasError = true, _this4.hasDeleted = false;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        onFileSelected: function onFileSelected(event) {
+            console.log(event);
+        }
+    },
+
+    mounted: function mounted() {
+        console.log('Component users is mounted ');
     }
 });
 
@@ -2245,42 +2388,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0542fbf4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/users/UserModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("span", [_vm._v("dfdsfdf")]),
-      _vm._v(" "),
-      _c("script", { attrs: { type: "text/x-template", id: "userModal" } }, [
-        _vm._v(
-          '\n  <transition name="modal">\n    <div class="modal-mask">\n      <div class="modal-wrapper">\n        <div class="modal-container">\n\n          <div class="modal-header">\n            <slot name="header">\n              default header\n            </slot>\n          </div>\n\n          <div class="modal-body">\n            <slot name="body">\n              default body\n            </slot>\n          </div>\n\n          <div class="modal-footer">\n            <slot name="footer">\n              default footer\n              <button class="modal-default-button" @click="$emit(\'close\')">\n                OK\n              </button>\n            </slot>\n          </div>\n        </div>\n      </div>\n    </div>\n  </transition>\n'
-        )
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0542fbf4", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f998e5a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/users/Users.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2291,38 +2398,164 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "button",
-        {
-          attrs: { id: "show-modal" },
-          on: {
-            click: function($event) {
-              _vm.userModal = true
-            }
-          }
-        },
-        [_vm._v("Show Modal")]
-      ),
-      _vm._v(" "),
-      _vm.userModal
-        ? _c(
-            "modal",
-            {
+      _c("div", [
+        _c("div", [
+          _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("label", { attrs: { for: "name" } }, [_vm._v("Name:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newUser.name,
+                  expression: "newUser.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "name", name: "name" },
+              domProps: { value: _vm.newUser.name },
               on: {
-                close: function($event) {
-                  _vm.userModal = false
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.newUser, "name", $event.target.value)
                 }
               }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("label", { attrs: { for: "lastname" } }, [_vm._v("Lastname:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newUser.lastname,
+                  expression: "newUser.lastname"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "lastname", name: "lastname" },
+              domProps: { value: _vm.newUser.lastname },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.newUser, "lastname", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("label", { attrs: { for: "email" } }, [_vm._v("Email:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newUser.email,
+                  expression: "newUser.email"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "email", name: "email" },
+              domProps: { value: _vm.newUser.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.newUser, "email", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("label", { attrs: { for: "avatar" } }, [_vm._v("Avatar:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newUser.avatar,
+                  expression: "newUser.avatar"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "avatar", name: "avatar" },
+              domProps: { value: _vm.newUser.avatar },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.newUser, "avatar", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "form-group flex-center position-ref ",
+            attrs: { id: "name", name: "name" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.createUser()
+              }
+            }
+          },
+          [
+            _c("input", {
+              staticClass: "btn btn-outline-info",
+              attrs: { type: "submit", value: "Create New User" }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group col-md-12" }, [
+          _c(
+            "p",
+            {
+              staticClass: "text-center alert alert-danger",
+              class: { hidden: _vm.hasError }
             },
-            [
-              _c("h3", { attrs: { slot: "header" }, slot: "header" }, [
-                _vm._v("custom header")
-              ])
-            ]
+            [_vm._v("Please fill all fields!")]
+          ),
+          _vm._v(" "),
+          _c(
+            "p",
+            {
+              staticClass: "text-center alert alert-success",
+              class: { hidden: _vm.hasUpdated }
+            },
+            [_vm._v("Updated Successfully!")]
+          ),
+          _vm._v(" "),
+          _c(
+            "p",
+            {
+              staticClass: "text-center alert alert-success",
+              class: { hidden: _vm.hasDeleted }
+            },
+            [_vm._v("Deleted Successfully!")]
           )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("userModal"),
+        ])
+      ]),
       _vm._v(" "),
       _c("table", { staticClass: "table table-bordered table-striped" }, [
         _vm._m(0),
@@ -2348,13 +2581,134 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _c("td")
+              _c("td", [
+                _c("a", {
+                  staticClass: "fa fa-pencil",
+                  attrs: { id: "show-modal" },
+                  on: {
+                    click: function($event) {
+                      _vm.showModal = true
+                      _vm.setVal(user.id, user.lastname, user.name, user.email)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("a", {
+                  staticClass: "fa fa-remove",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.deleteUser(user)
+                    }
+                  }
+                })
+              ])
             ])
           })
         ),
         _vm._v(" "),
         _c("tfoot")
-      ])
+      ]),
+      _vm._v(" "),
+      _vm.showModal
+        ? _c(
+            "modal",
+            {
+              on: {
+                close: function($event) {
+                  _vm.showModal = false
+                }
+              }
+            },
+            [
+              _c("h3", { attrs: { slot: "header" }, slot: "header" }, [
+                _vm._v("Edit USER")
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "hidden",
+                    disabled: "",
+                    id: "u_id",
+                    name: "id",
+                    required: ""
+                  },
+                  domProps: { value: this.u_id }
+                }),
+                _vm._v("\n            Lastname: "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "u_lastname",
+                    name: "lastname",
+                    required: ""
+                  },
+                  domProps: { value: this.u_lastname }
+                }),
+                _vm._v("\n            Name: "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "u_name",
+                    name: "name",
+                    required: ""
+                  },
+                  domProps: { value: this.u_name }
+                }),
+                _vm._v("\n            Email: "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "email",
+                    id: "u_email",
+                    name: "email",
+                    required: ""
+                  },
+                  domProps: { value: this.u_email }
+                }),
+                _vm._v("\n            avatar: "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "file", id: "u_avatar", name: "avatar" },
+                  domProps: { value: this.u_avatar },
+                  on: { change: _vm.onFileSelected }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: {
+                      click: function($event) {
+                        _vm.showModal = false
+                      }
+                    }
+                  },
+                  [_vm._v("\n                Cancel\n            ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    on: {
+                      click: function($event) {
+                        _vm.editUser()
+                      }
+                    }
+                  },
+                  [_vm._v("\n                Update\n            ")]
+                )
+              ])
+            ]
+          )
+        : _vm._e()
     ],
     1
   )
@@ -16025,81 +16379,37 @@ module.exports = g;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue__ = __webpack_require__("./resources/assets/js/components/users/Users.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue__ = __webpack_require__("./resources/assets/js/components/users/UserModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__("./resources/assets/js/router/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue__ = __webpack_require__("./resources/assets/js/components/users/Users.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue__);
 
 
 
 
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 
 
-var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+//import router from './router'
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('modal', {
+    template: '#modal-template'
+});
+
+var users = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+
     el: '#UserController',
-    template: '<app></app>',
-    components: {
-        App: __WEBPACK_IMPORTED_MODULE_1__components_users_Users_vue___default.a,
-        userModal: __WEBPACK_IMPORTED_MODULE_2__components_users_UserModal_vue___default.a
+    template: '<users></users>',
+    components: { Users: __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default.a
     },
     data: {
         users: [],
-        userModal: false,
-        user: { name: '', lastname: '', email: '', password: '', avatar: '' },
-        edit: false
+        hasError: true,
+        hasDeleted: true,
+        hasAgeError: true,
+        showModal: false
     },
-    router: __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */]
+    routes: [{ path: '/api/admin/users', name: 'api.users.store', component: __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default.a }, { path: '/api/admin/users/:id', name: 'api.users.update', component: __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default.a }, { path: '/api/admin/users/:id', name: 'api.users.destroy', component: __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default.a }]
 });
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/users/UserModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = null
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0542fbf4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/users/UserModal.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/users/UserModal.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0542fbf4", Component.options)
-  } else {
-    hotAPI.reload("data-v-0542fbf4", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
 
 /***/ }),
 
@@ -16148,33 +16458,6 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
-
-/***/ }),
-
-/***/ "./resources/assets/js/router/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue__ = __webpack_require__("./resources/assets/js/components/users/Users.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue__);
-
-
-
-
-//import UsersForm from '../components/users/UsersForm.vue'
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
-
-var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-	mode: 'history',
-	routes: [{ path: '/users', component: __WEBPACK_IMPORTED_MODULE_2__components_users_Users_vue___default.a }]
-});
-
-/* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 
