@@ -1,44 +1,66 @@
 <template>
     <div>
         <div>
-        <!--<form action="#" v-on:submit.prevent="createUser" method="post">-->
-            <div>
-               <div class="form-group col-md-6">
-                    <label for="name">Name:</label>
-                    <input v-model="newUser.name" type="text" id="name" name="name" class="form-control">
-               </div>
+            <form action="#" >
+                <div>
+                   <div class="form-group col-md-6">
+                        <label for="name">Name:</label>
+                        <input v-model="newUser.name"
+                               v-validate="'required|alpha'"
+                               :class="{'input': true, 'is-danger': errors.has('name') }"
+                               type="text" id="name" name="name" class="form-control">
+                        <i v-show="errors.has('name')" class="fa fa-warning"></i>
+                        <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
+                   </div>
 
-                <div class="form-group col-md-6">
-                    <label for="lastname">Lastname:</label>
-                    <input v-model="newUser.lastname" type="text" id="lastname" name="lastname" class="form-control">
+                    <div class="form-group col-md-6">
+                        <label for="lastname">Lastname:</label>
+                        <input v-model="newUser.lastname"
+                               v-validate="'required|alpha'"
+                               :class="{'input': true, 'is-danger': errors.has('name') }"
+                               type="text" id="lastname" name="lastname" class="form-control">
+                        <i v-show="errors.has('lastname')" class="fa fa-warning"></i>
+                        <span v-show="errors.has('lastname')" class="help is-danger">{{ errors.first('lastname') }}</span>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div class="form-group col-md-6">
-                    <label for="email">Email:</label>
-                    <input v-model="newUser.email" type="text" id="email" name="email" class="form-control">
+                <div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Email:</label>
+                        <input v-model="newUser.email" type="text" id="email" name="email" class="form-control"
+                               v-validate="'required|email'"
+                               :class="{'input': true, 'is-danger': errors.has('email') }">
+                        <i v-show="errors.has('email')" class="fa fa-warning"></i>
+                        <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="avatar">Avatar:</label>
+                        <div class="form-inline">
+                            <!--<avatar username="newUser.name"></avatar>-->
+                            <input type="file" id="avatar" name="avatar" class="form-control sr-only" style="position: relative !important;"
+                                   v-on:change="onFileSelected">
+                            <!--v-model="newUser.avatar">-->
+                            <div class="form-group mb-2">
+                                    <button @click="onUpload" class="btn btn-info mb-2">Upload</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="avatar">Avatar:</label>
-                    <input v-model="newUser.avatar" type="text" id="avatar" name="avatar" class="form-control">
-                </div>
-            </div>
-                <div class="form-group flex-center position-ref " @click.prevent="createUser()" id="name" name="name">
-                    <input type="submit" class="btn btn-outline-info" value="Create New User">
+                    <div class="form-group flex-center position-ref col-md-12" @click.prevent="createUser()">
+                        <input type="submit" class="btn btn-outline-info" value="Create New User">
+                    </div>
+
+                <div class="form-group col-md-12">
+                    <p class="text-center alert alert-danger"
+                       v-bind:class="{ hidden: hasError }">Please fill all fields!</p>
+                    <!--{{ csrf_field() }}-->
+                    <p class="text-center alert alert-success"
+                       v-bind:class="{ hidden: hasUpdated }">Updated Successfully!</p>
+                    <p class="text-center alert alert-success"
+                       v-bind:class="{ hidden: hasDeleted }">Deleted Successfully!</p>
                 </div>
 
-            <div class="form-group col-md-12">
-                <p class="text-center alert alert-danger"
-                   v-bind:class="{ hidden: hasError }">Please fill all fields!</p>
-                <!--{{ csrf_field() }}-->
-                <p class="text-center alert alert-success"
-                   v-bind:class="{ hidden: hasUpdated }">Updated Successfully!</p>
-                <p class="text-center alert alert-success"
-                   v-bind:class="{ hidden: hasDeleted }">Deleted Successfully!</p>
-            </div>
+            </form>
         </div>
-        <!--</form>-->
-
         <table  class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -80,11 +102,15 @@
                              required  :value="this.u_lastname">
                 Name: <input type="text" class="form-control" id="u_name" name="name"
                              required  :value="this.u_name">
+                    <!--<div>-->
+                        <!--<i v-show="errors.has('u_name')" class="fa fa-warning"></i>-->
+                        <!--<span v-show="errors.has('u_name')" class="help is-danger">{{ errors.first('u_name') }}</span>-->
+                    <!--</div>-->
                 Email: <input type="email" class="form-control" id="u_email" name="email"
-                            required  :value="this.u_email">
-                avatar: <input type="file" class="form-control" id="u_avatar" name="avatar"
-                               @change="onFileSelected"
-                               :value="this.u_avatar">
+                            required email  :value="this.u_email">
+                <!--avatar: <input type="file" class="form-control" id="u_avatar" name="avatar"-->
+                               <!--@change="onFileSelected"-->
+                               <!--:value="this.u_avatar">-->
 
 
             </div>
@@ -114,6 +140,7 @@
                 hasUpdated: true,
                 hasDeleted: true,
                 showModal: false,
+                selectedFile: null,
                 u_lastname: '',
                 u_name: '',
                 u_id: '',
@@ -123,7 +150,6 @@
 
             }
         },
-
 
         created() {
             this.error = this.users = null;
@@ -144,6 +170,7 @@
             },
 
             createUser() {
+                this.validateBeforeSubmit();
                 axios
                     .post('/api/admin/users', this.newUser)
                     .then(response => {
@@ -157,6 +184,7 @@
                         console.log(error)
                     });
                     this.hasDeleted = true;
+                    //event.target.reset();
                 },
 
             setVal(val_id, val_lastname, val_name, val_email) {
@@ -197,6 +225,7 @@
                  this.hasUpdated = true;
 
             },
+
             deleteUser: function deleteUser(user) {
                 //console.log(user.id);
                 axios
@@ -211,9 +240,41 @@
                         console.log(error)
                     });
             },
+
             onFileSelected(event) {
-                console.log(event)
+                //console.log(event.target.files[0])
+                this.selectedFile = event.target.files[0]
+            },
+
+            validateBeforeSubmit() {
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        // eslint-disable-next-line
+                        this.hasError = false
+                        return;
+                    }
+
+                    this.hasError = true
+                });
+            },
+
+            onUpload() {
+                    const fd = new FormData();
+                    console.log(this.selectedFile);
+                    fd.append('avatar', this.selectedFile);
+                    fd.append('_method', 'put');
+                axios
+                    .post('/uploads',
+                        fd)
+                        .then(response => {
+                            console.log(response)
+                        })
+                        .catch(function(){
+                            console.log(response)
+                            console.log('FAILURE!!');
+                        });
             }
+
 
         },
 

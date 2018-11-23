@@ -74,6 +74,7 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $user = User::find($id);
 
 //        $this->validate($request, [
@@ -91,7 +92,9 @@ class UsersController extends Controller
         $user->lastname = $request->lastname;
         $user->name = $request->name;
         $user->email = $request->email;
-        //$user->uploadAvatar($request->file('avatar'));
+        $user->avatar = $request->file('avatar');
+        dd($request->all());
+         //$user->uploadAvatar($request->file('avatar'));
         $user->save();
         //return redirect()->route('users.index');
         return $user;
@@ -111,20 +114,20 @@ class UsersController extends Controller
 //        $user = User::find( $request->id )->delete();
 //    }
 
-//    public function uploadAvatar($image)
-//    {
-//        if ($image == null) {return;}
-//
-//        $this->removeAvatar();
-//        //dd(get_class_methods($image));
-//        $filename = str_random(10) . '.' . $image->extension();
-//
-//        $image->storeAs('uploads', $filename);
-//
-//        $this->avatar = $filename;
-//        $this->save();
-//
-//    }
+    public function uploadAvatar($image)
+    {
+        if ($image == null) { return; }
+
+        //$this->removeAvatar();
+        //dd(get_class_methods($image));
+        $filename = str_random(10) . '.' . $image->extension();
+
+        $image->storeAs('uploads', $filename);
+
+        $this->avatar = $filename;
+        $this->save();
+
+    }
 
 //    public function removeAvatar() {
 //        if ($this->avatar != null) {
