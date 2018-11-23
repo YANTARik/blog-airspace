@@ -34,13 +34,13 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="avatar">Avatar:</label>
-                        <div class="form-inline">
+                        <div class="form-inline" v-model="newUser.avatar">
                             <!--<avatar username="newUser.name"></avatar>-->
                             <input type="file" id="avatar" name="avatar" class="form-control sr-only" style="position: relative !important;"
                                    v-on:change="onFileSelected">
                             <!--v-model="newUser.avatar">-->
                             <div class="form-group mb-2">
-                                    <button @click="onUpload" class="btn btn-info mb-2">Upload</button>
+                                    <!--<button @click="onUpload" class="btn btn-info mb-2">Upload</button>-->
                             </div>
                         </div>
                     </div>
@@ -108,9 +108,9 @@
                     <!--</div>-->
                 Email: <input type="email" class="form-control" id="u_email" name="email"
                             required email  :value="this.u_email">
-                <!--avatar: <input type="file" class="form-control" id="u_avatar" name="avatar"-->
-                               <!--@change="onFileSelected"-->
-                               <!--:value="this.u_avatar">-->
+                avatar: <input type="file" class="form-control" id="u_avatar" name="avatar"
+                               @change="onFileSelected"
+                               :value="this.u_avatar">
 
 
             </div>
@@ -171,6 +171,7 @@
 
             createUser() {
                 this.validateBeforeSubmit();
+                this.newUser.avatar = this.onUpload();
                 axios
                     .post('/api/admin/users', this.newUser)
                     .then(response => {
@@ -192,15 +193,17 @@
                      this.u_lastname = val_lastname;
                      this.u_name = val_name;
                      this.u_email = val_email;
-                     //this.u_avatar = val_avatar;
+                     this.u_avatar = this.onUpload();
                  },
 
             editUser: function(){
+                //this.validateBeforeSubmit();
+
                  let i_val_1 = document.getElementById('u_id');
                  let l_val_1 = document.getElementById('u_lastname');
                  let n_val_1 = document.getElementById('u_name');
                  let e_val_1 = document.getElementById('u_email');
-                 //let a_val_1 = document.getElementById('u_avatar');
+                 let a_val_1 = document.getElementById('u_avatar');
 
                  axios
 
@@ -208,8 +211,8 @@
                          {
                              lastname: l_val_1.value,
                              name: n_val_1.value,
-                             email: e_val_1.value
-                             //val_4: a_val_1.value
+                             email: e_val_1.value,
+                             avatar: a_val_1.value
                          })
 
                      .then(response => {
@@ -266,7 +269,10 @@
                 axios
                     .post('/api/admin/users/uploads', fd)
                         .then(response => {
-                            console.log(response)
+                            console.log(response.data.avatar);
+                            response.data = response.data.avatar;
+                            console.log(response.data);
+
                         })
                         .catch(function(){
                             console.log('FAILURE!!');

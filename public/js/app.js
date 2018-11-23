@@ -1782,6 +1782,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.validateBeforeSubmit();
+            this.newUser.avatar = this.onUpload();
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users', this.newUser).then(function (response) {
                 _this2.user = response.data.user;
                 _this2.fetchUsers();
@@ -1799,24 +1800,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.u_lastname = val_lastname;
             this.u_name = val_name;
             this.u_email = val_email;
-            //this.u_avatar = val_avatar;
+            this.u_avatar = this.onUpload();
         },
 
 
         editUser: function editUser() {
             var _this3 = this;
 
+            //this.validateBeforeSubmit();
+
             var i_val_1 = document.getElementById('u_id');
             var l_val_1 = document.getElementById('u_lastname');
             var n_val_1 = document.getElementById('u_name');
             var e_val_1 = document.getElementById('u_email');
-            //let a_val_1 = document.getElementById('u_avatar');
+            var a_val_1 = document.getElementById('u_avatar');
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/admin/users/' + i_val_1.value, {
                 lastname: l_val_1.value,
                 name: n_val_1.value,
-                email: e_val_1.value
-                //val_4: a_val_1.value
+                email: e_val_1.value,
+                avatar: a_val_1.value
             }).then(function (response) {
                 _this3.user = response.data.user;
                 _this3.fetchUsers();
@@ -1864,7 +1867,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             fd.append('avatar', this.selectedFile);
             //fd.append('_method', 'put');
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users/uploads', fd).then(function (response) {
-                console.log(response);
+                console.log(response.data.avatar);
+                response.data = response.data.avatar;
+                console.log(response.data);
             }).catch(function () {
                 console.log('FAILURE!!');
             });
@@ -11354,25 +11359,29 @@ var render = function() {
             _c("div", { staticClass: "form-group col-md-6" }, [
               _c("label", { attrs: { for: "avatar" } }, [_vm._v("Avatar:")]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-inline" }, [
-                _c("input", {
-                  staticClass: "form-control sr-only",
-                  staticStyle: { position: "relative !important" },
-                  attrs: { type: "file", id: "avatar", name: "avatar" },
-                  on: { change: _vm.onFileSelected }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group mb-2" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-info mb-2",
-                      on: { click: _vm.onUpload }
+              _c(
+                "div",
+                {
+                  staticClass: "form-inline",
+                  model: {
+                    value: _vm.newUser.avatar,
+                    callback: function($$v) {
+                      _vm.$set(_vm.newUser, "avatar", $$v)
                     },
-                    [_vm._v("Upload")]
-                  )
-                ])
-              ])
+                    expression: "newUser.avatar"
+                  }
+                },
+                [
+                  _c("input", {
+                    staticClass: "form-control sr-only",
+                    staticStyle: { position: "relative !important" },
+                    attrs: { type: "file", id: "avatar", name: "avatar" },
+                    on: { change: _vm.onFileSelected }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group mb-2" })
+                ]
+              )
             ])
           ]),
           _vm._v(" "),
@@ -11540,6 +11549,13 @@ var render = function() {
                     email: ""
                   },
                   domProps: { value: this.u_email }
+                }),
+                _vm._v("\n            avatar: "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "file", id: "u_avatar", name: "avatar" },
+                  domProps: { value: this.u_avatar },
+                  on: { change: _vm.onFileSelected }
                 })
               ]),
               _vm._v(" "),

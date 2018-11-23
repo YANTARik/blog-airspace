@@ -48,7 +48,7 @@ class UsersController extends Controller
 
         //$user->uploadAvatar( $request->file( 'avatar' ) );
         $user->save();
-        dd($user);
+        //dd($user);
         //return view( 'admin.users.fetchUser');
         return $user;
     }
@@ -74,7 +74,7 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        //dd($request->all());
         $user = User::find($id);
 
 //        $this->validate($request, [
@@ -87,13 +87,14 @@ class UsersController extends Controller
 //            ],
 //            //'avatar'    =>  'nullable|image'
 //        ]);
-
+        dd($request->all());
         //$user->edit($request->all()); //name,email
         $user->lastname = $request->lastname;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->avatar = $user->uploadAvatar($request->file('avatar'));
+        $user->avatar = $request->avatar;
         //dd($request->all());
+        dd($user);
          //$user->uploadAvatar($request->file('avatar'));
         $user->save();
         //return redirect()->route('users.index');
@@ -114,20 +115,19 @@ class UsersController extends Controller
 //        $user = User::find( $request->id )->delete();
 //    }
 
-    public function uploadAvatar($image)
+    public function uploadAvatar(Request $request)
     {
         //if ($image == null) { return; }
 
         //$this->removeAvatar();
-        //dd($image);
+        $image = $request->file('avatar');
         $filename = str_random(10) . '.' . $image->extension();
-
-            $image->storeAs('uploads', $filename);
-
+        $image->storeAs('uploads', $filename);
         $this->avatar = $filename;
-        $this->save();
+        //$this->save();
 
-        return $filename;
+        //return $filename;
+        return response()->json(['avatar' => $filename]);
 
     }
 
