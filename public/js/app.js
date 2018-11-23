@@ -1862,11 +1862,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var fd = new FormData();
             console.log(this.selectedFile);
             fd.append('avatar', this.selectedFile);
-            fd.append('_method', 'put');
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/uploads', fd).then(function (response) {
+            //fd.append('_method', 'put');
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users/uploads', fd).then(function (response) {
                 console.log(response);
             }).catch(function () {
-                console.log(response);
                 console.log('FAILURE!!');
             });
         }

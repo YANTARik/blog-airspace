@@ -92,8 +92,8 @@ class UsersController extends Controller
         $user->lastname = $request->lastname;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->avatar = $request->file('avatar');
-        dd($request->all());
+        $user->avatar = $user->uploadAvatar($request->file('avatar'));
+        //dd($request->all());
          //$user->uploadAvatar($request->file('avatar'));
         $user->save();
         //return redirect()->route('users.index');
@@ -116,16 +116,18 @@ class UsersController extends Controller
 
     public function uploadAvatar($image)
     {
-        if ($image == null) { return; }
+        //if ($image == null) { return; }
 
         //$this->removeAvatar();
-        //dd(get_class_methods($image));
+        //dd($image);
         $filename = str_random(10) . '.' . $image->extension();
 
-        $image->storeAs('uploads', $filename);
+            $image->storeAs('uploads', $filename);
 
         $this->avatar = $filename;
         $this->save();
+
+        return $filename;
 
     }
 

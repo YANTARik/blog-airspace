@@ -262,15 +262,13 @@
                     const fd = new FormData();
                     console.log(this.selectedFile);
                     fd.append('avatar', this.selectedFile);
-                    fd.append('_method', 'put');
+                    //fd.append('_method', 'put');
                 axios
-                    .post('/uploads',
-                        fd)
+                    .post('/api/admin/users/uploads', fd)
                         .then(response => {
                             console.log(response)
                         })
                         .catch(function(){
-                            console.log(response)
                             console.log('FAILURE!!');
                         });
             }

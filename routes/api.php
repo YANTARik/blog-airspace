@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'api.'], function () {
     Route::resource('/users', 'UsersController')->except(['show', 'index']);
     Route::get('/users', 'UsersController@fetchUsers');
+    Route::post('users/uploads', 'UsersController@uploadAvatar')->name('users.upload');
 //    Route::delete('/users/{:id}', 'UsersController@destroy');
 //    Route::post('/users', 'UsersController@create');
 });
