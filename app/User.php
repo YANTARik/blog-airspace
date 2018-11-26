@@ -66,7 +66,7 @@ class User extends Authenticatable
         if ($image == null) {return;}
 
         $this->removeAvatar();
-        dd(get_class_methods($image));
+        //dd(get_class_methods($image));
         $filename = str_random(10) . '.' . $image->extension();
 
         $image->storeAs('uploads', $filename);
