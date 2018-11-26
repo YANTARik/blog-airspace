@@ -96,7 +96,7 @@
                 </td>
                 <td>
                     <a id="show-modal" @click="showModal=true;
-                        setVal(user.id, user.lastname, user.name, user.password, user.email, user.avatar)"
+                        setVal(user.id, user.lastname, user.name, user.password, user.email)"
                         class="fa fa-pencil"></a>
                     <a class="fa fa-remove" @click.prevent="deleteUser(user)"></a>
                 </td>
@@ -189,11 +189,20 @@
             createUser() {
 
                 this.validateBeforeSubmit();
-                console.log(this.newUser);
-                this.avatar = onUpload(response);
-                console.log(this.newUser);
+                const fd = new FormData();
+                //console.log(this.selectedFile);
+                fd.append('avatar', this.selectedFile);
+                fd.append('name', this.newUser.name);
+                fd.append('lastname', this.newUser.lastname);
+                fd.append('email', this.newUser.email);
+                fd.append('password', this.newUser.password);
+
                 axios
-                    .post('/api/admin/users', )
+                    .post('/api/admin/users', fd, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
                     .then(response => {
                         this.user = response.data.user;
                         console.log(this.user)
@@ -220,33 +229,44 @@
 
             editUser: function(){
                 //this.validateBeforeSubmit();
+                const fd = new FormData();
+                //fd.append('u_avatar', this.selectedFile);
+                let i_val_1 = document.getElementById('u_id');
+                let l_val_1 = document.getElementById('u_lastname');
+                let n_val_1 = document.getElementById('u_name');
+                let e_val_1 = document.getElementById('u_email');
+                let p_val_1 = document.getElementById('u_password');
+                let a_val_1 = document.getElementById('u_avatar');
+                //let a_val_1 = fd.append('u_avatar', this.selectedFile);
+                //fd.append('i_val_1', this.u_id);
+                fd.append('u_name', this.u_name);
+                fd.append('u_lastname', this.u_lastname);
+                fd.append('u_email', this.u_email);
+                fd.append('u_password', this.u_password);
+                fd.append('u_avatar', this.selectedFile);
+                axios
+                    .patch('/api/admin/users/' + i_val_1.value,
+                        {
+                            lastname:  l_val_1.value,
+                            name:      n_val_1.value,
+                            email:     e_val_1.value,
+                            password:  p_val_1.value,
+                            avatar:    a_val_1.value,
 
-                 let i_val_1 = document.getElementById('u_id');
-                 let l_val_1 = document.getElementById('u_lastname');
-                 let n_val_1 = document.getElementById('u_name');
-                 let e_val_1 = document.getElementById('u_email');
-                 let p_val_1 = document.getElementById('u_password');
-                 //let a_val_1 = document.getElementById('u_avatar');
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
 
-                 axios
-                     .patch('/api/admin/users/' + i_val_1.value,
-                         {
-                             lastname:  l_val_1.value,
-                             name:      n_val_1.value,
-                             email:     e_val_1.value,
-                             password:  p_val_1.value,
-                             //avatar:    a_val_1.value
-                         })
-
-                     .then(response => {
-                         this.user = response.data.user;
-                         this.fetchUsers();
-                         this.hasUpdated = false
-                         this.showModal=false
-                         })
-                     .catch(error => {
-                         console.log(error)
-                     });
+                    .then(response => {
+                        this.user = response.data.user;
+                        this.fetchUsers();
+                        this.hasUpdated = false
+                        this.showModal=false
+                        })
+                    .catch(error => {
+                        console.log(error)
+                    });
 
                  this.hasUpdated = true;
 
@@ -285,13 +305,12 @@
                 const fd = new FormData();
                 console.log(this.selectedFile);
                 fd.append('avatar', this.selectedFile);
-                let that = this;
                 axios
                     .post('/api/admin/users/uploads', fd)
                         .then(response => {
                             response.data = response.data.avatar;
                             that.avatar = response.data;
-                            console.log(that.avatar);
+                            //console.log(that.avatar);
                         })
                         .catch(function(){
                             console.log('FAILURE!!');

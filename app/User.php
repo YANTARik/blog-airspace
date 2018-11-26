@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Http\Request;
 use \Storage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -59,26 +60,27 @@ class User extends Authenticatable
         $this->save();
     }
 
-//    public function uploadAvatar($image)
-//    {
-//        if ($image == null) {return;}
+        public function uploadAvatar($image)
+    {
+        //dd($request->all());
+        if ($image == null) {return;}
+
+        $this->removeAvatar();
+        dd(get_class_methods($image));
+        $filename = str_random(10) . '.' . $image->extension();
+
+        $image->storeAs('uploads', $filename);
+
+        $this->avatar = $filename;
+        $this->save();
+
+    }
 //
-//        $this->removeAvatar();
-//        //dd(get_class_methods($image));
-//        $filename = str_random(10) . '.' . $image->extension();
-//
-//        $image->storeAs('uploads', $filename);
-//
-//        $this->avatar = $filename;
-//        $this->save();
-//
-//    }
-//
-//    public function removeAvatar() {
-//        if ($this->avatar != null) {
-//            Storage::delete('uploads/' . $this->avatar);
-//        }
-//    }
+    public function removeAvatar() {
+        if ($this->avatar != null) {
+            Storage::delete('uploads/' . $this->avatar);
+        }
+    }
 
     public function remove() {
 //        $this->removeAvatar();

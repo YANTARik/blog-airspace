@@ -34,11 +34,11 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        //dd($request->file());
         $this->validate( $request, [
-            'name'	=>	['required', 'string', 'max:255'],
-            'lastname'	=>	['required', 'string', 'max:255'],
-            'email'=>'required|email|unique:users',
+            'name'	=>	['string', 'max:255'],
+            'lastname'	=>	['string', 'max:255'],
+            'email'=>'email|unique:users',
             'password'=>'nullable',
             'avatar'=>'nullable|image'
         ] );
@@ -52,49 +52,51 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $user->generatePassword( $request->get('password') );
-        $user->avatar = $request->avatar;
+        $user->avatar = $user->uploadAvatar( $request->file( 'avatar' ) );
+
         //return view( 'admin.users.fetchUser');
         return $user;
     }
 
-    public function edit(Request $request, $id)
-    {
-
-        //dd($request->all());
-//        $user = User::find($id);
-//        return view('admin.users.edit', compact('user'));
-
-        $user->lastname = $request->lastname;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $user->generatePassword( $request->get('password') );
-        $user->avatar = $request->avatar;
-        $user->save();
-
-        return $user;
-    }
+//    public function edit(Request $request, $id)
+//    {
+//
+//        //dd($request->all());
+////        $user = User::find($id);
+////        return view('admin.users.edit', compact('user'));
+//
+//        $user->lastname = $request->lastname;
+//        $user->name = $request->name;
+//        $user->email = $request->email;
+//        $user->password = $user->generatePassword( $request->get('password') );
+//        $user->avatar = $request->avatar;
+//        $user->save();
+//
+//        return $user;
+//    }
 
 
 
     public function update(Request $request, $id)
     {
+        //dd($request->all());
         $user = User::find($id);
 
         $this->validate($request, [
-            'name'	=>	['required', 'string', 'max:255'],
-            'lastname'	=>	['required', 'string', 'max:255'],
+            'name'	=>	['string', 'max:255'],
+            'lastname'	=>	['string', 'max:255'],
             'email' =>  [
-                'required',
                 'email',
-            ],
-            'avatar'    =>  'nullable|image'
+            ]
+            //'avatar'    =>  'nullable|image'
         ]);
 
         $user->lastname = $request->lastname;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $user->generatePassword( $request->get('password') );
-        $user->avatar = $request->avatar;
+        //dd($request->all());
+        $user->avatar = $user->uploadAvatar( $request->avatar( 'avatar' ) );
         //dd($request->all());
        //dd($user);
          //$user->uploadAvatar($request->file('avatar'));
@@ -117,22 +119,22 @@ class UsersController extends Controller
 //        $user = User::find( $request->id )->delete();
 //    }
 
-    public function uploadAvatar(Request $request)
-    {
-        //dd($request->all());
-        //if ($request->file == null) { return; }
-
-        //$this->removeAvatar();
-        $image = $request->file('avatar');
-        $filename = str_random(10) . '.' . $image->extension();
-        $image->storeAs('uploads', $filename);
-        $this->avatar = $filename;
-        //$this->save();
-
-        //return $filename;
-        return response()->json(['avatar' => $filename]);
-
-    }
+//    //public function uploadAvatar(Request $request)
+//    {
+//        dd($request->all());
+//        //if ($request->file == null) { return; }
+//
+//        //$this->removeAvatar();
+//        $image = $request->file('avatar');
+//        $filename = str_random(10) . '.' . $image->extension();
+//        $image->storeAs('uploads', $filename);
+//        $this->avatar = $filename;
+//        //$this->save();
+//
+//        //return $filename;
+//        return response()->json(['avatar' => $filename]);
+//
+//    }
 
 //    public function removeAvatar() {
 //        if ($this->avatar != null) {

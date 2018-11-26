@@ -1799,10 +1799,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.validateBeforeSubmit();
-            console.log(this.newUser);
-            this.avatar = onUpload(response);
-            console.log(this.newUser);
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users').then(function (response) {
+            var fd = new FormData();
+            //console.log(this.selectedFile);
+            fd.append('avatar', this.selectedFile);
+            fd.append('name', this.newUser.name);
+            fd.append('lastname', this.newUser.lastname);
+            fd.append('email', this.newUser.email);
+            fd.append('password', this.newUser.password);
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users', fd, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function (response) {
                 _this2.user = response.data.user;
                 console.log(_this2.user);
                 _this2.fetchUsers();
@@ -1829,20 +1838,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             //this.validateBeforeSubmit();
-
+            var fd = new FormData();
+            //fd.append('u_avatar', this.selectedFile);
             var i_val_1 = document.getElementById('u_id');
             var l_val_1 = document.getElementById('u_lastname');
             var n_val_1 = document.getElementById('u_name');
             var e_val_1 = document.getElementById('u_email');
             var p_val_1 = document.getElementById('u_password');
-            //let a_val_1 = document.getElementById('u_avatar');
-
+            var a_val_1 = document.getElementById('u_avatar');
+            //let a_val_1 = fd.append('u_avatar', this.selectedFile);
+            //fd.append('i_val_1', this.u_id);
+            fd.append('u_name', this.u_name);
+            fd.append('u_lastname', this.u_lastname);
+            fd.append('u_email', this.u_email);
+            fd.append('u_password', this.u_password);
+            fd.append('u_avatar', this.selectedFile);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/admin/users/' + i_val_1.value, {
                 lastname: l_val_1.value,
                 name: n_val_1.value,
                 email: e_val_1.value,
-                password: p_val_1.value
-                //avatar:    a_val_1.value
+                password: p_val_1.value,
+                avatar: a_val_1.value,
+
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             }).then(function (response) {
                 _this3.user = response.data.user;
                 _this3.fetchUsers();
@@ -1886,11 +1906,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var fd = new FormData();
             console.log(this.selectedFile);
             fd.append('avatar', this.selectedFile);
-            var that = this;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users/uploads', fd).then(function (response) {
                 response.data = response.data.avatar;
                 that.avatar = response.data;
-                console.log(that.avatar);
+                //console.log(that.avatar);
             }).catch(function () {
                 console.log('FAILURE!!');
             });
@@ -11555,8 +11574,7 @@ var render = function() {
                         user.lastname,
                         user.name,
                         user.password,
-                        user.email,
-                        user.avatar
+                        user.email
                       )
                     }
                   }
