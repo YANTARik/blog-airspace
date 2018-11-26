@@ -1738,6 +1738,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1756,8 +1767,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             u_id: '',
             u_email: '',
             u_avatar: '',
-            newUser: { 'lastname': '', 'name': '', 'email': '', 'avatar': '' }
-
+            u_password: '',
+            newUser: {
+                'lastname': '',
+                'name': '',
+                'email': '',
+                'avatar': '',
+                'password': ''
+            }
         };
     },
     created: function created() {
@@ -1782,9 +1799,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.validateBeforeSubmit();
-            this.newUser.avatar = this.onUpload();
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users', this.newUser).then(function (response) {
+            console.log(this.newUser);
+            this.avatar = onUpload(response);
+            console.log(this.newUser);
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users').then(function (response) {
                 _this2.user = response.data.user;
+                console.log(_this2.user);
                 _this2.fetchUsers();
                 _this2.hasError = true;
                 _this2.hasUpdated = false;
@@ -1795,12 +1815,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.hasDeleted = true;
             //event.target.reset();
         },
-        setVal: function setVal(val_id, val_lastname, val_name, val_email) {
+        setVal: function setVal(val_id, val_lastname, val_name, val_password, val_email) {
             this.u_id = val_id;
             this.u_lastname = val_lastname;
             this.u_name = val_name;
             this.u_email = val_email;
-            this.u_avatar = this.onUpload();
+            this.u_password = val_password;
+            //this.u_avatar = val_avatar;
         },
 
 
@@ -1813,13 +1834,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var l_val_1 = document.getElementById('u_lastname');
             var n_val_1 = document.getElementById('u_name');
             var e_val_1 = document.getElementById('u_email');
-            var a_val_1 = document.getElementById('u_avatar');
+            var p_val_1 = document.getElementById('u_password');
+            //let a_val_1 = document.getElementById('u_avatar');
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/admin/users/' + i_val_1.value, {
                 lastname: l_val_1.value,
                 name: n_val_1.value,
                 email: e_val_1.value,
-                avatar: a_val_1.value
+                password: p_val_1.value
+                //avatar:    a_val_1.value
             }).then(function (response) {
                 _this3.user = response.data.user;
                 _this3.fetchUsers();
@@ -1835,17 +1858,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteUser: function deleteUser(user) {
             var _this4 = this;
 
-            //console.log(user.id);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/admin/users/' + user.id).then(function (response) {
                 _this4.fetchUsers();
-                _this4.hasError = true, _this4.hasDeleted = false;
+                _this4.hasError = true;
+                _this4.hasDeleted = false;
             }).catch(function (error) {
                 console.log(error);
             });
         },
 
         onFileSelected: function onFileSelected(event) {
-            //console.log(event.target.files[0])
             this.selectedFile = event.target.files[0];
         },
         validateBeforeSubmit: function validateBeforeSubmit() {
@@ -1853,23 +1875,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$validator.validateAll().then(function (result) {
                 if (result) {
-                    // eslint-disable-next-line
                     _this5.hasError = false;
                     return;
                 }
-
                 _this5.hasError = true;
             });
         },
         onUpload: function onUpload() {
+
             var fd = new FormData();
             console.log(this.selectedFile);
             fd.append('avatar', this.selectedFile);
-            //fd.append('_method', 'put');
+            var that = this;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/admin/users/uploads', fd).then(function (response) {
-                console.log(response.data.avatar);
                 response.data = response.data.avatar;
-                console.log(response.data);
+                that.avatar = response.data;
+                console.log(that.avatar);
             }).catch(function () {
                 console.log('FAILURE!!');
             });
@@ -11169,7 +11190,7 @@ var render = function() {
       _c("div", [
         _c("form", { attrs: { action: "#" } }, [
           _c("div", [
-            _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("div", { staticClass: "form-group col-md-4" }, [
               _c("label", { attrs: { for: "name" } }, [_vm._v("Name:")]),
               _vm._v(" "),
               _c("input", {
@@ -11183,8 +11204,8 @@ var render = function() {
                   {
                     name: "validate",
                     rawName: "v-validate",
-                    value: "required|alpha",
-                    expression: "'required|alpha'"
+                    value: "required|alpha|min:3|max:100",
+                    expression: "'required|alpha|min:3|max:100'"
                   }
                 ],
                 staticClass: "form-control",
@@ -11230,7 +11251,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("div", { staticClass: "form-group col-md-4" }, [
               _c("label", { attrs: { for: "lastname" } }, [
                 _vm._v("Lastname:")
               ]),
@@ -11246,8 +11267,8 @@ var render = function() {
                   {
                     name: "validate",
                     rawName: "v-validate",
-                    value: "required|alpha",
-                    expression: "'required|alpha'"
+                    value: "required|alpha|min:3|max:100",
+                    expression: "'required|alpha|min:3|max:100'"
                   }
                 ],
                 staticClass: "form-control",
@@ -11290,6 +11311,69 @@ var render = function() {
                   staticClass: "help is-danger"
                 },
                 [_vm._v(_vm._s(_vm.errors.first("lastname")))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-4" }, [
+              _c("label", { attrs: { for: "password" } }, [
+                _vm._v("Password:")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newUser.password,
+                    expression: "newUser.password"
+                  },
+                  {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "required|alpha|min:3|max:100",
+                    expression: "'required|alpha|min:3|max:100'"
+                  }
+                ],
+                staticClass: "form-control",
+                class: { input: true, "is-danger": _vm.errors.has("password") },
+                attrs: { type: "password", id: "password", name: "password" },
+                domProps: { value: _vm.newUser.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newUser, "password", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("i", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.has("password"),
+                    expression: "errors.has('password')"
+                  }
+                ],
+                staticClass: "fa fa-warning"
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errors.has("password"),
+                      expression: "errors.has('password')"
+                    }
+                  ],
+                  staticClass: "help is-danger"
+                },
+                [_vm._v(_vm._s(_vm.errors.first("password")))]
               )
             ])
           ]),
@@ -11466,7 +11550,14 @@ var render = function() {
                   on: {
                     click: function($event) {
                       _vm.showModal = true
-                      _vm.setVal(user.id, user.lastname, user.name, user.email)
+                      _vm.setVal(
+                        user.id,
+                        user.lastname,
+                        user.name,
+                        user.password,
+                        user.email,
+                        user.avatar
+                      )
                     }
                   }
                 }),
@@ -11537,7 +11628,17 @@ var render = function() {
                   },
                   domProps: { value: this.u_name }
                 }),
-                _vm._v(" "),
+                _vm._v("\n            Password: "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "password",
+                    id: "u_password",
+                    name: "password",
+                    required: ""
+                  },
+                  domProps: { value: this.u_password }
+                }),
                 _vm._v("\n            Email: "),
                 _c("input", {
                   staticClass: "form-control",
@@ -11545,12 +11646,11 @@ var render = function() {
                     type: "email",
                     id: "u_email",
                     name: "email",
-                    required: "",
-                    email: ""
+                    required: ""
                   },
                   domProps: { value: this.u_email }
                 }),
-                _vm._v("\n            avatar: "),
+                _vm._v("\n            Avatar: "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: { type: "file", id: "u_avatar", name: "avatar" },

@@ -1,0 +1,8 @@
+*
+!public/
+!.gitignore
+
+
+*.jpeg
+*.png
+*.jpg

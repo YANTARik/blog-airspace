@@ -42,13 +42,17 @@ class UsersController extends Controller
             'password'=>'nullable',
             'avatar'=>'nullable|image'
         ] );
-//        dd($request->all());
-        $user = User::add( $request->all() );
-        //$user =  new User($request->all());
 
+        //$user = User::add( $request->all() );
+        //$user =  new User($request->all());
+        //dd($request->all());
         //$user->uploadAvatar( $request->file( 'avatar' ) );
-        $user->save();
-        //dd($user);
+        $user = new User;
+        $user->lastname = $request->lastname;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $user->generatePassword( $request->get('password') );
+        $user->avatar = $request->avatar;
         //return view( 'admin.users.fetchUser');
         return $user;
     }
@@ -60,11 +64,11 @@ class UsersController extends Controller
 //        $user = User::find($id);
 //        return view('admin.users.edit', compact('user'));
 
-        $user = User::where('id', $id)->first();
-        $user->lastname = $request->get('lastname');
-        $user->name = $request->get('name');
-        $user->email = $request->get('email');
-        //$user->password = $request->get('password');
+        $user->lastname = $request->lastname;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $user->generatePassword( $request->get('password') );
+        $user->avatar = $request->avatar;
         $user->save();
 
         return $user;
@@ -74,27 +78,25 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
-        //dd($request->all());
         $user = User::find($id);
 
-//        $this->validate($request, [
-//            'name'	=>	['required', 'string', 'max:255'],
-//            'lastname'	=>	['required', 'string', 'max:255'],
-//            'email' =>  [
-//                'required',
-//                'email',
-//                Rule::unique('users'),
-//            ],
-//            //'avatar'    =>  'nullable|image'
-//        ]);
-        dd($request->all());
-        //$user->edit($request->all()); //name,email
+        $this->validate($request, [
+            'name'	=>	['required', 'string', 'max:255'],
+            'lastname'	=>	['required', 'string', 'max:255'],
+            'email' =>  [
+                'required',
+                'email',
+            ],
+            'avatar'    =>  'nullable|image'
+        ]);
+
         $user->lastname = $request->lastname;
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->password = $user->generatePassword( $request->get('password') );
         $user->avatar = $request->avatar;
         //dd($request->all());
-        dd($user);
+       //dd($user);
          //$user->uploadAvatar($request->file('avatar'));
         $user->save();
         //return redirect()->route('users.index');
@@ -117,7 +119,8 @@ class UsersController extends Controller
 
     public function uploadAvatar(Request $request)
     {
-        //if ($image == null) { return; }
+        //dd($request->all());
+        //if ($request->file == null) { return; }
 
         //$this->removeAvatar();
         $image = $request->file('avatar');

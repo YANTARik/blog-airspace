@@ -3,25 +3,36 @@
         <div>
             <form action="#" >
                 <div>
-                   <div class="form-group col-md-6">
+                   <div class="form-group col-md-4">
                         <label for="name">Name:</label>
                         <input v-model="newUser.name"
-                               v-validate="'required|alpha'"
+                               v-validate="'required|alpha|min:3|max:100'"
                                :class="{'input': true, 'is-danger': errors.has('name') }"
                                type="text" id="name" name="name" class="form-control">
                         <i v-show="errors.has('name')" class="fa fa-warning"></i>
                         <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
                    </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="lastname">Lastname:</label>
                         <input v-model="newUser.lastname"
-                               v-validate="'required|alpha'"
+                               v-validate="'required|alpha|min:3|max:100'"
                                :class="{'input': true, 'is-danger': errors.has('name') }"
                                type="text" id="lastname" name="lastname" class="form-control">
                         <i v-show="errors.has('lastname')" class="fa fa-warning"></i>
                         <span v-show="errors.has('lastname')" class="help is-danger">{{ errors.first('lastname') }}</span>
                     </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="password">Password:</label>
+                        <input v-model="newUser.password"
+                               v-validate="'required|alpha|min:3|max:100'"
+                               :class="{'input': true, 'is-danger': errors.has('password') }"
+                               type="password" id="password" name="password" class="form-control">
+                        <i v-show="errors.has('password')" class="fa fa-warning"></i>
+                        <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
+                    </div>
+
                 </div>
                 <div>
                     <div class="form-group col-md-6">
@@ -84,7 +95,9 @@
                     <img :src="`/uploads/${user.avatar}`" v-if="user.avatar" style="width: 75px; height: 75px;">
                 </td>
                 <td>
-                    <a id="show-modal" @click="showModal=true; setVal(user.id, user.lastname,  user.name, user.email)"class="fa fa-pencil"></a>
+                    <a id="show-modal" @click="showModal=true;
+                        setVal(user.id, user.lastname, user.name, user.password, user.email, user.avatar)"
+                        class="fa fa-pencil"></a>
                     <a class="fa fa-remove" @click.prevent="deleteUser(user)"></a>
                 </td>
             </tr>
@@ -102,13 +115,11 @@
                              required  :value="this.u_lastname">
                 Name: <input type="text" class="form-control" id="u_name" name="name"
                              required  :value="this.u_name">
-                    <!--<div>-->
-                        <!--<i v-show="errors.has('u_name')" class="fa fa-warning"></i>-->
-                        <!--<span v-show="errors.has('u_name')" class="help is-danger">{{ errors.first('u_name') }}</span>-->
-                    <!--</div>-->
+                Password: <input type="password" class="form-control" id="u_password" name="password"
+                             required  :value="this.u_password">
                 Email: <input type="email" class="form-control" id="u_email" name="email"
-                            required email  :value="this.u_email">
-                avatar: <input type="file" class="form-control" id="u_avatar" name="avatar"
+                            required :value="this.u_email">
+                Avatar: <input type="file" class="form-control" id="u_avatar" name="avatar"
                                @change="onFileSelected"
                                :value="this.u_avatar">
 
@@ -146,8 +157,14 @@
                 u_id: '',
                 u_email: '',
                 u_avatar: '',
-                newUser: { 'lastname': '','name': '','email': '','avatar': '' },
-
+                u_password: '',
+                newUser: {
+                    'lastname': '',
+                    'name': '',
+                    'email': '',
+                    'avatar': '',
+                    'password': ''
+                },
             }
         },
 
@@ -170,12 +187,16 @@
             },
 
             createUser() {
+
                 this.validateBeforeSubmit();
-                this.newUser.avatar = this.onUpload();
+                console.log(this.newUser);
+                this.avatar = onUpload(response);
+                console.log(this.newUser);
                 axios
-                    .post('/api/admin/users', this.newUser)
+                    .post('/api/admin/users', )
                     .then(response => {
                         this.user = response.data.user;
+                        console.log(this.user)
                         this.fetchUsers();
                         this.hasError = true
                         this.hasUpdated = false
@@ -188,12 +209,13 @@
                     //event.target.reset();
                 },
 
-            setVal(val_id, val_lastname, val_name, val_email) {
+            setVal(val_id, val_lastname, val_name, val_password, val_email) {
                      this.u_id = val_id;
                      this.u_lastname = val_lastname;
                      this.u_name = val_name;
                      this.u_email = val_email;
-                     this.u_avatar = this.onUpload();
+                     this.u_password = val_password;
+                     //this.u_avatar = val_avatar;
                  },
 
             editUser: function(){
@@ -203,16 +225,17 @@
                  let l_val_1 = document.getElementById('u_lastname');
                  let n_val_1 = document.getElementById('u_name');
                  let e_val_1 = document.getElementById('u_email');
-                 let a_val_1 = document.getElementById('u_avatar');
+                 let p_val_1 = document.getElementById('u_password');
+                 //let a_val_1 = document.getElementById('u_avatar');
 
                  axios
-
                      .patch('/api/admin/users/' + i_val_1.value,
                          {
-                             lastname: l_val_1.value,
-                             name: n_val_1.value,
-                             email: e_val_1.value,
-                             avatar: a_val_1.value
+                             lastname:  l_val_1.value,
+                             name:      n_val_1.value,
+                             email:     e_val_1.value,
+                             password:  p_val_1.value,
+                             //avatar:    a_val_1.value
                          })
 
                      .then(response => {
@@ -230,13 +253,12 @@
             },
 
             deleteUser: function deleteUser(user) {
-                //console.log(user.id);
                 axios
                     .delete('/api/admin/users/' + user.id)
                     .then(response => {
                         this.fetchUsers();
-                        this.hasError = true,
-                        this.hasDeleted = false
+                        this.hasError = true;
+                        this.hasDeleted = false;
 
                     })
                     .catch(error => {
@@ -245,41 +267,36 @@
             },
 
             onFileSelected(event) {
-                //console.log(event.target.files[0])
                 this.selectedFile = event.target.files[0]
             },
 
             validateBeforeSubmit() {
                 this.$validator.validateAll().then((result) => {
                     if (result) {
-                        // eslint-disable-next-line
-                        this.hasError = false
+                        this.hasError = false;
                         return;
                     }
-
                     this.hasError = true
                 });
             },
 
             onUpload() {
-                    const fd = new FormData();
-                    console.log(this.selectedFile);
-                    fd.append('avatar', this.selectedFile);
-                    //fd.append('_method', 'put');
+
+                const fd = new FormData();
+                console.log(this.selectedFile);
+                fd.append('avatar', this.selectedFile);
+                let that = this;
                 axios
                     .post('/api/admin/users/uploads', fd)
                         .then(response => {
-                            console.log(response.data.avatar);
                             response.data = response.data.avatar;
-                            console.log(response.data);
-
+                            that.avatar = response.data;
+                            console.log(that.avatar);
                         })
                         .catch(function(){
                             console.log('FAILURE!!');
                         });
             }
-
-
         },
 
         mounted() {
