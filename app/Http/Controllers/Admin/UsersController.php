@@ -12,8 +12,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-//        //return User::all();
-//        return view( 'admin.users.index', compact('users') );
+
         return view( 'admin.users.fetchUser', compact('users'));
     }
 
@@ -34,7 +33,6 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
-
         $this->validate( $request, [
             'name'	=>	['string', 'max:255'],
             'lastname'	=>	['string', 'max:255'],
@@ -59,7 +57,6 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $user = User::find($id);
 
         $this->validate($request, [
@@ -68,7 +65,7 @@ class UsersController extends Controller
             'email' =>  [
                 'email',
             ],
-            'avatar'    =>  'nullable|image'
+            //'avatar'    =>  'nullable|image'
         ]);
 
         $user->lastname = $request->lastname;
@@ -88,7 +85,6 @@ class UsersController extends Controller
 
         User::find( $id )->remove();
 
-        //return redirect()->route( 'users.fetchUsers' );
         return response()->json(['message' => 'Пользователь был удален.']);
     }
 

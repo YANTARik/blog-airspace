@@ -1,0 +1,7 @@
+*
+!public/
+!.gitignore
+
+admin.js
+blog.js
+app.js

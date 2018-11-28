@@ -48,7 +48,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
-                        <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update User's Info</h5>
+                        <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update User's Info to{{this.form.name}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -57,11 +57,18 @@
                         <div class="modal-body">
                             <div class="form-group">
 
-                                <label class="col-sm-2 control-label">Profile Photo</label>
-                                <div class="col-sm-12">
+                                <label class="control-label text-center">Profile Photo</label>
+
+                                <div class="text-center">
+                                    <output id="list" class="img-thumbnail"></output>
                                     <input @change="selectFile"
                                            type="file" name="avatar" class="form-input">
 
+                                </div>
+                                <div class='row'>
+                                    <div class='col-lg-8 col-lg-offset-2'>
+                                        <hr>
+                                    </div>
                                 </div>
 
                             </div>
@@ -88,7 +95,7 @@
 
 
                             <div class="form-group">
-                                <input v-model="form.password" type="password" name="password" id="password"
+                                <input v-model="form.password" type="password" autocomplete="current-password" name="password" id="password"
                                        class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
                                 <has-error :form="form" field="password"></has-error>
                             </div>
@@ -113,6 +120,7 @@
 
 
     import axios from 'axios';
+    import objectToFormData from 'object-to-formdata';
     export default {
         data() {
 
@@ -184,31 +192,22 @@
             },
 
             updateUser(){
-                console.log('in update');
-                console.log(this.form.id);
                 this.$Progress.start();
-                const FD = new FormData();
-                FD.set('avatar', this.form.selectedFile);
-                FD.set('id', this.form.id);
-                FD.set('name', this.form.name);
-                FD.set('lastname', this.form.lastname);
-                FD.set('email', this.form.email);
-                FD.set('password', this.form.password);
                 console.log(this.form);
-
-                axios
-                    .patch('/api/users/' + this.form.id, FD,
-                        {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        })
+                this.form.avatar = this.selectedFile;
+                this.form
+                    .patch('/api/users/' + this.form.id,{
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
                     .then(() => {
                         $('#addNew').modal('hide');
                         swal(
                             'Updated!',
                             'Information has been updated.',
-                            'success'
+                            'success',
+
                         )
                         this.$Progress.finish();
                         this.fetchUsers();
@@ -218,7 +217,6 @@
                     });
             },
             editModal(user){
-                console.log('in editModal');
                 this.editmode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
@@ -226,14 +224,37 @@
             },
 
             newModal(){
-                console.log('in newModal');
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
+
             selectFile (event) {
                 this.selectedFile = event.target.files[0];
+                let avatar = event.target.files[0];
+                let reader = new FileReader();
+
+                let limit = 1024 * 1024 * 2;
+                if(avatar['size'] > limit){
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You are uploading a large file',
+                    })
+                    return false;
+                }
+                reader.onload = (function(avatar) {
+                    return function(event) {
+                        let span = document.createElement('span');
+                        span.innerHTML = ['<img class="thumb" src="', event.target.result,
+                            '" title="', escape(avatar.name), '"/>'].join('');
+                        document.getElementById('list').insertBefore(span, null);
+                    };
+                })(avatar);
+
+                reader.readAsDataURL(avatar);
             },
+
             createUser(){
                 this.$Progress.start();
 
@@ -255,6 +276,7 @@
                         toast({
                             type: 'success',
                             title: 'User Created in successfully'
+
                         })
                         this.$Progress.finish();
                         this.fetchUsers();
@@ -263,7 +285,6 @@
                         this.$Progress.fail();
                     })
             },
-
 
         },
 

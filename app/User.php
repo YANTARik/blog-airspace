@@ -12,33 +12,27 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
         'name', 'lastname', 'email', 'avatar', 'password'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    public function posts() {
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
 
-    public static function add($fields) {
+    public static function add($fields)
+    {
         $user = new static;
         $user->fill($fields);
         $user->save();
@@ -46,7 +40,8 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function generatePassword($password) {
+    public function generatePassword($password)
+    {
         if ($password != null) {
             $this->password = bcrypt($password);
             $this->save();
@@ -60,13 +55,13 @@ class User extends Authenticatable
         $this->save();
     }
 
-        public function uploadAvatar($image)
+    public function uploadAvatar($image)
     {
-        //dd($request->all());
+
         if ($image == null) {return;}
 
         $this->removeAvatar();
-        //dd(get_class_methods($image));
+
         $filename = str_random(10) . '.' . $image->extension();
 
         $image->storeAs('uploads', $filename);
@@ -75,15 +70,17 @@ class User extends Authenticatable
         $this->save();
 
     }
-//
-    public function removeAvatar() {
+
+    public function removeAvatar()
+    {
         if ($this->avatar != null) {
             Storage::delete('uploads/' . $this->avatar);
         }
     }
 
-    public function remove() {
-//        $this->removeAvatar();
+    public function remove()
+    {
+
         $this->delete();
     }
 
