@@ -1,77 +1,11 @@
 <template>
     <div>
         <div>
-            <form action="#" >
-                <div>
-                   <div class="form-group col-md-4">
-                        <label for="name">Name:</label>
-                        <input v-model="newUser.name"
-                               v-validate="'required|alpha|min:3|max:100'"
-                               :class="{'input': true, 'is-danger': errors.has('name') }"
-                               type="text" id="name" name="name" class="form-control">
-                        <i v-show="errors.has('name')" class="fa fa-warning"></i>
-                        <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
-                   </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="lastname">Lastname:</label>
-                        <input v-model="newUser.lastname"
-                               v-validate="'required|alpha|min:3|max:100'"
-                               :class="{'input': true, 'is-danger': errors.has('name') }"
-                               type="text" id="lastname" name="lastname" class="form-control">
-                        <i v-show="errors.has('lastname')" class="fa fa-warning"></i>
-                        <span v-show="errors.has('lastname')" class="help is-danger">{{ errors.first('lastname') }}</span>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="password">Password:</label>
-                        <input v-model="newUser.password"
-                               v-validate="'required|alpha|min:3|max:100'"
-                               :class="{'input': true, 'is-danger': errors.has('password') }"
-                               type="password" id="password" name="password" class="form-control">
-                        <i v-show="errors.has('password')" class="fa fa-warning"></i>
-                        <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
-                    </div>
-
-                </div>
-                <div>
-                    <div class="form-group col-md-6">
-                        <label for="email">Email:</label>
-                        <input v-model="newUser.email" type="text" id="email" name="email" class="form-control"
-                               v-validate="'required|email'"
-                               :class="{'input': true, 'is-danger': errors.has('email') }">
-                        <i v-show="errors.has('email')" class="fa fa-warning"></i>
-                        <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="avatar">Avatar:</label>
-                        <div class="form-inline" v-model="newUser.avatar">
-                            <!--<avatar username="newUser.name"></avatar>-->
-                            <input type="file" id="avatar" name="avatar" class="form-control sr-only" style="position: relative !important;"
-                                   v-on:change="onFileSelected">
-                            <!--v-model="newUser.avatar">-->
-                            <div class="form-group mb-2">
-                                    <!--<button @click="onUpload" class="btn btn-info mb-2">Upload</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    <div class="form-group flex-center position-ref col-md-12" @click.prevent="createUser()">
-                        <input type="submit" class="btn btn-outline-info" value="Create New User">
-                    </div>
-
-                <div class="form-group col-md-12">
-                    <p class="text-center alert alert-danger"
-                       v-bind:class="{ hidden: hasError }">Please fill all fields!</p>
-                    <!--{{ csrf_field() }}-->
-                    <p class="text-center alert alert-success"
-                       v-bind:class="{ hidden: hasUpdated }">Updated Successfully!</p>
-                    <p class="text-center alert alert-success"
-                       v-bind:class="{ hidden: hasDeleted }">Deleted Successfully!</p>
-                </div>
-
-            </form>
+            <div class="card-tools">
+                <button class="btn btn-success" @click="newModal">Add New <i class="btn btn-outline-info"></i></button>
+            </div>
         </div>
+        <div class="row"></div>
         <table  class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -95,48 +29,85 @@
                     <img :src="`/uploads/${user.avatar}`" v-if="user.avatar" style="width: 75px; height: 75px;">
                 </td>
                 <td>
-                    <a id="show-modal" @click="showModal=true;
-                        setVal(user.id, user.lastname, user.name, user.password, user.email)"
-                        class="fa fa-pencil"></a>
-                    <a class="fa fa-remove" @click.prevent="deleteUser(user)"></a>
+
+                    <a href="#" @click="editModal(user)">
+                        <i class="fa fa-edit blue"></i>
+                    </a>
+                    /
+                    <a href="#" @click="deleteUser(user.id)">
+                        <i class="fa fa-trash red"></i>
+                    </a>
                 </td>
             </tr>
 
             </tbody>
             <tfoot></tfoot>
         </table>
-        <modal v-if="showModal" @close="showModal=false">
-            <h3 slot="header">Edit USER</h3>
-            <div slot="body">
+        <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
+                        <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update User's Info</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form @submit.prevent="editmode ? updateUser() : createUser()">
+                        <div class="modal-body">
+                            <div class="form-group">
 
-                <input type="hidden" disabled class="form-control" id="u_id" name="id"
-                       required  :value="this.u_id">
-                Lastname: <input type="text" class="form-control" id="u_lastname" name="lastname"
-                             required  :value="this.u_lastname">
-                Name: <input type="text" class="form-control" id="u_name" name="name"
-                             required  :value="this.u_name">
-                Password: <input type="password" class="form-control" id="u_password" name="password"
-                             required  :value="this.u_password">
-                Email: <input type="email" class="form-control" id="u_email" name="email"
-                            required :value="this.u_email">
-                Avatar: <input type="file" class="form-control" id="u_avatar" name="avatar"
-                               @change="onFileSelected"
-                               :value="this.u_avatar">
+                                <label class="col-sm-2 control-label">Profile Photo</label>
+                                <div class="col-sm-12">
+                                    <input @change="selectFile"
+                                           type="file" name="avatar" class="form-input">
+
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <input v-model="form.lastname" type="text" name="lastname"
+                                       placeholder="Lastname"
+                                       class="form-control" :class="{ 'is-invalid': form.errors.has('lastname') }">
+                                <has-error :form="form" field="lastname"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input v-model="form.name" type="text" name="name"
+                                       placeholder="Name"
+                                       class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <input v-model="form.email" type="email" name="email"
+                                       placeholder="Email Address"
+                                       class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                                <has-error :form="form" field="email"></has-error>
+                            </div>
 
 
+
+                            <div class="form-group">
+                                <input v-model="form.password" type="password" name="password" id="password"
+                                       class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
+                                <has-error :form="form" field="password"></has-error>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
+                            <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
+                        </div>
+
+                    </form>
+
+                </div>
             </div>
-            <div slot="footer">
-                <button class="btn btn-default" @click="showModal = false">
-                    Cancel
-                </button>
-
-                <button class="btn btn-info" @click="editUser()">
-                    Update
-                </button>
-            </div>
-        </modal>
+        </div>
     </div>
 </template>
+
 
 <script>
 
@@ -147,24 +118,20 @@
 
             return {
                 users: [],
+                editmode: false,
                 hasError: true,
                 hasUpdated: true,
                 hasDeleted: true,
                 showModal: false,
                 selectedFile: null,
-                u_lastname: '',
-                u_name: '',
-                u_id: '',
-                u_email: '',
-                u_avatar: '',
-                u_password: '',
-                newUser: {
-                    'lastname': '',
-                    'name': '',
-                    'email': '',
-                    'avatar': '',
-                    'password': ''
-                },
+                form: new Form ({
+                    id: '',
+                    lastname: '',
+                    name: '',
+                    email: '',
+                    avatar: null,
+                    password: ''
+                }),
             }
         },
 
@@ -177,7 +144,7 @@
 
             fetchUsers: function () {
                 axios
-                    .get('/api/admin/users')
+                    .get('/api/users')
                     .then(response => {
                         this.users = response.data.users;
                     })
@@ -186,136 +153,118 @@
                     });
             },
 
-            createUser() {
+            deleteUser(id) {
 
-                this.validateBeforeSubmit();
-                const fd = new FormData();
-                //console.log(this.selectedFile);
-                fd.append('avatar', this.selectedFile);
-                fd.append('name', this.newUser.name);
-                fd.append('lastname', this.newUser.lastname);
-                fd.append('email', this.newUser.email);
-                fd.append('password', this.newUser.password);
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+
+                    // Send request to the server
+                    if (result.value) {
+                        this.form.delete('/api/users/' + id)
+                            .then(()=>{
+                                swal(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                                this.fetchUsers();
+                            //
+                        }).catch(()=> {
+                            swal("Failed!", "There was something wronge.", "warning");
+                        });
+                    }
+                })
+            },
+
+            updateUser(){
+                console.log('in update');
+                console.log(this.form.id);
+                this.$Progress.start();
+                const FD = new FormData();
+                FD.set('avatar', this.form.selectedFile);
+                FD.set('id', this.form.id);
+                FD.set('name', this.form.name);
+                FD.set('lastname', this.form.lastname);
+                FD.set('email', this.form.email);
+                FD.set('password', this.form.password);
+                console.log(this.form);
 
                 axios
-                    .post('/api/admin/users', fd, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                    .then(response => {
-                        this.user = response.data.user;
-                        console.log(this.user)
-                        this.fetchUsers();
-                        this.hasError = true
-                        this.hasUpdated = false
-                    })
-                    .catch(error => {
-                        this.hasError = false
-                        console.log(error)
-                    });
-                    this.hasDeleted = true;
-                    //event.target.reset();
-                },
-
-            setVal(val_id, val_lastname, val_name, val_password, val_email) {
-                     this.u_id = val_id;
-                     this.u_lastname = val_lastname;
-                     this.u_name = val_name;
-                     this.u_email = val_email;
-                     this.u_password = val_password;
-                     //this.u_avatar = val_avatar;
-                 },
-
-            editUser: function(){
-                //this.validateBeforeSubmit();
-                const fd = new FormData();
-                //fd.append('u_avatar', this.selectedFile);
-                let i_val_1 = document.getElementById('u_id');
-                let l_val_1 = document.getElementById('u_lastname');
-                let n_val_1 = document.getElementById('u_name');
-                let e_val_1 = document.getElementById('u_email');
-                let p_val_1 = document.getElementById('u_password');
-                let a_val_1 = document.getElementById('u_avatar');
-                //let a_val_1 = fd.append('u_avatar', this.selectedFile);
-                //fd.append('i_val_1', this.u_id);
-                fd.append('u_name', this.u_name);
-                fd.append('u_lastname', this.u_lastname);
-                fd.append('u_email', this.u_email);
-                fd.append('u_password', this.u_password);
-                fd.append('u_avatar', this.selectedFile);
-                axios
-                    .patch('/api/admin/users/' + i_val_1.value,
+                    .patch('/api/users/' + this.form.id, FD,
                         {
-                            lastname:  l_val_1.value,
-                            name:      n_val_1.value,
-                            email:     e_val_1.value,
-                            password:  p_val_1.value,
-                            avatar:    a_val_1.value,
-
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
                         })
-
-                    .then(response => {
-                        this.user = response.data.user;
+                    .then(() => {
+                        $('#addNew').modal('hide');
+                        swal(
+                            'Updated!',
+                            'Information has been updated.',
+                            'success'
+                        )
+                        this.$Progress.finish();
                         this.fetchUsers();
-                        this.hasUpdated = false
-                        this.showModal=false
-                        })
-                    .catch(error => {
-                        console.log(error)
-                    });
-
-                 this.hasUpdated = true;
-
-            },
-
-            deleteUser: function deleteUser(user) {
-                axios
-                    .delete('/api/admin/users/' + user.id)
-                    .then(response => {
-                        this.fetchUsers();
-                        this.hasError = true;
-                        this.hasDeleted = false;
-
                     })
-                    .catch(error => {
-                        console.log(error)
+                    .catch(() => {
+                        this.$Progress.fail();
                     });
             },
-
-            onFileSelected(event) {
-                this.selectedFile = event.target.files[0]
+            editModal(user){
+                console.log('in editModal');
+                this.editmode = true;
+                this.form.reset();
+                $('#addNew').modal('show');
+                this.form.fill(user);
             },
 
-            validateBeforeSubmit() {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.hasError = false;
-                        return;
-                    }
-                    this.hasError = true
-                });
+            newModal(){
+                console.log('in newModal');
+                this.editmode = false;
+                this.form.reset();
+                $('#addNew').modal('show');
             },
-
-            onUpload() {
+            selectFile (event) {
+                this.selectedFile = event.target.files[0];
+            },
+            createUser(){
+                this.$Progress.start();
 
                 const fd = new FormData();
-                console.log(this.selectedFile);
                 fd.append('avatar', this.selectedFile);
+                fd.append('name', this.form.name);
+                fd.append('lastname', this.form.lastname);
+                fd.append('email', this.form.email);
+                fd.append('password', this.form.password);
+
                 axios
-                    .post('/api/admin/users/uploads', fd)
-                        .then(response => {
-                            response.data = response.data.avatar;
-                            that.avatar = response.data;
-                            //console.log(that.avatar);
+                    .post('/api/users', fd, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(() => {
+                        $('#addNew').modal('hide')
+                        toast({
+                            type: 'success',
+                            title: 'User Created in successfully'
                         })
-                        .catch(function(){
-                            console.log('FAILURE!!');
-                        });
-            }
+                        this.$Progress.finish();
+                        this.fetchUsers();
+                    })
+                    .catch(() => {
+                        this.$Progress.fail();
+                    })
+            },
+
+
         },
 
         mounted() {
