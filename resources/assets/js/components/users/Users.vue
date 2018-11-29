@@ -193,10 +193,15 @@
 
             updateUser(){
                 this.$Progress.start();
+                let df = new FormData();
+                df.append('avatar', this.selectedFile);
+                df.append('name', this.form.name);
+                df.append('email', this.form.email);
+                df.append('password', this.form.password);
                 console.log(this.form);
-                this.form.avatar = this.selectedFile;
-                this.form
-                    .patch('/api/users/' + this.form.id,{
+
+                axios
+                    .patch('/api/users/' + this.form.id, df, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -207,7 +212,6 @@
                             'Updated!',
                             'Information has been updated.',
                             'success',
-
                         )
                         this.$Progress.finish();
                         this.fetchUsers();
@@ -258,7 +262,7 @@
             createUser(){
                 this.$Progress.start();
 
-                const fd = new FormData();
+                let fd = new FormData();
                 fd.append('avatar', this.selectedFile);
                 fd.append('name', this.form.name);
                 fd.append('lastname', this.form.lastname);

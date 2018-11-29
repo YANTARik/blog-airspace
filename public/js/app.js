@@ -1801,9 +1801,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             this.$Progress.start();
+            var df = new FormData();
+            df.append('avatar', this.selectedFile);
+            df.append('name', this.form.name);
+            df.append('email', this.form.email);
+            df.append('password', this.form.password);
             console.log(this.form);
-            this.form.avatar = this.selectedFile;
-            this.form.patch('/api/users/' + this.form.id, {
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/users/' + this.form.id, df, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
