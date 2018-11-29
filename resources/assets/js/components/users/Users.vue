@@ -48,7 +48,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
-                        <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update User's Info to{{this.form.name}}</h5>
+                        <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update User's Info to  {{this.form.name}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -59,11 +59,13 @@
 
                                 <label class="control-label text-center">Profile Photo</label>
 
-                                <div class="text-center">
+                                <div class="text-center" v-model="form.avatar">
                                     <output id="list" class="img-thumbnail"></output>
                                     <input @change="selectFile"
-                                           type="file" name="avatar" class="form-input">
-
+                                           type="file" name="avatar" class="form-input"
+                                           v-validate="'image'">
+                                    <i v-show="errors.has('avatar')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('avatar')" class="help is-danger">{{ errors.first('avatar') }}</span>
                                 </div>
                                 <div class='row'>
                                     <div class='col-lg-8 col-lg-offset-2'>
@@ -75,29 +77,37 @@
                             <div class="form-group">
                                 <input v-model="form.lastname" type="text" name="lastname"
                                        placeholder="Lastname"
-                                       class="form-control" :class="{ 'is-invalid': form.errors.has('lastname') }">
-                                <has-error :form="form" field="lastname"></has-error>
+                                       class="form-control" v-validate="'required|alpha|min:3|max:255'" :class="{'input': true, 'is-danger': errors.has('lastname') }">
+                                <i v-show="errors.has('lastname')" class="fa fa-warning"></i>
+                                <span v-show="errors.has('lastname')" class="help is-danger">{{ errors.first('lastname') }}</span>
                             </div>
                             <div class="form-group">
                                 <input v-model="form.name" type="text" name="name"
                                        placeholder="Name"
-                                       class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                                <has-error :form="form" field="name"></has-error>
+                                       class="form-control" v-validate="'required|alpha|min:3|max:255'" :class="{'input': true, 'is-danger': errors.has('name') }">
+
+                                <i v-show="errors.has('name')" class="fa fa-warning"></i>
+                                <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
+
                             </div>
 
                             <div class="form-group">
                                 <input v-model="form.email" type="email" name="email"
                                        placeholder="Email Address"
-                                       class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
-                                <has-error :form="form" field="email"></has-error>
+                                       class="form-control" v-validate="'required|url|min:3|max:255'" :class="{'input': true, 'is-danger': errors.has('email') }">
+                                <i v-show="errors.has('email')" class="fa fa-warning"></i>
+                                <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+
+
                             </div>
 
 
 
                             <div class="form-group">
                                 <input v-model="form.password" type="password" autocomplete="current-password" name="password" id="password"
-                                       class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
-                                <has-error :form="form" field="password"></has-error>
+                                       class="form-control" v-validate="'required|min:3|max:255'" :class="{'input': true, 'is-danger': errors.has('password') }">
+                                <i v-show="errors.has('password')" class="fa fa-warning"></i>
+                                <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
                             </div>
 
                         </div>
@@ -193,15 +203,17 @@
 
             updateUser(){
                 this.$Progress.start();
+                this.validateBeforeSubmit();
                 let df = new FormData();
                 df.append('avatar', this.selectedFile);
+                df.append('lastname', this.form.lastname);
                 df.append('name', this.form.name);
                 df.append('email', this.form.email);
                 df.append('password', this.form.password);
                 console.log(this.form);
 
                 axios
-                    .patch('/api/users/' + this.form.id, df, {
+                    .post('/api/users/' + this.form.id, df, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -220,6 +232,7 @@
                         this.$Progress.fail();
                     });
             },
+
             editModal(user){
                 this.editmode = true;
                 this.form.reset();
@@ -261,7 +274,7 @@
 
             createUser(){
                 this.$Progress.start();
-
+                this.validateBeforeSubmit();
                 let fd = new FormData();
                 fd.append('avatar', this.selectedFile);
                 fd.append('name', this.form.name);
@@ -290,10 +303,14 @@
                     })
             },
 
-        },
+            validateBeforeSubmit() {
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        return;
+                    }
+                });
+            }
 
-        mounted() {
-            console.log('Component users is mounted ')
         }
     }
 </script>

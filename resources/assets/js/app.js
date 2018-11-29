@@ -16,10 +16,6 @@ Vue.use(VueProgressBar, {
 import Users from './components/users/Users.vue';
 
 import { Form, HasError, AlertError } from 'vform';
-import objectToFormData from 'object-to-formdata';
-
-//const objectToFormData = window.objectToFormData
-
 
 
 import swal from 'sweetalert2'
@@ -44,8 +40,7 @@ const users = new Vue({
 
     el: '#UserController',
     template: `<users></users>`,
-    components: { Users
-    },
+    components: { Users },
     data: {
         users: [],
         hasError: true,

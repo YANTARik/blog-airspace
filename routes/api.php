@@ -14,9 +14,10 @@ use Illuminate\Http\Request;
 */
 Route::group(['prefix' => '', 'namespace' => 'Admin', 'as' => 'api.'], function () {
 
-    Route::resource('/users', 'UsersController')->except(['show', 'index']);
+    //Route::resource('/users', 'UsersController')->except(['show', 'update', 'index']);
     Route::get('/users', 'UsersController@fetchUsers');
-    Route::post('users/uploads', 'UsersController@uploadAvatar')->name('users.upload');
-    Route::post('/api/users', 'UsersController@store');
+    Route::post('/users', 'UsersController@store');
+    Route::post('/users/{user}', 'UsersController@update');
+    Route::delete('/users/{user}', 'UsersController@destroy');
 });
 

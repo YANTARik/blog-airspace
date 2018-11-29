@@ -58,7 +58,7 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
 
-        dd($request->all());
+        //dd($request->file());
         $user = User::find($id);
 
         $this->validate($request, [
@@ -67,14 +67,14 @@ class UsersController extends Controller
             'email' =>  [
                 'email',
             ],
-            //'avatar'    =>  'nullable|image'
+            'avatar'    =>  'nullable|image'
         ]);
 
         $user->lastname = $request->lastname;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $user->generatePassword( $request->get('password') );
-
+        //dd($request->file());
         $user->avatar = $user->uploadAvatar( $request->file( 'avatar' ) );
 
         $user->save();
