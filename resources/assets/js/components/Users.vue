@@ -132,7 +132,7 @@
     import axios from 'axios';
     import objectToFormData from 'object-to-formdata';
     export default {
-        data() {
+        data: function() {
 
             return {
                 users: [],

@@ -14,6 +14,9 @@
           </a>
         </li>
         <li><a href="{{route('users.index')}}"><i class="fa fa-users"></i> <span>Пользователи</span></a></li>
-
+        <router-link to="/users" class="nav-link">
+          <i class="fa fa-users"></i>
+          <p>Users</p>
+        </router-link>
       </ul>
 

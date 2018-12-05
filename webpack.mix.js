@@ -49,7 +49,8 @@ mix.styles([
     'resources/assets/admin/plugins/datatables/dataTables.bootstrap.css',
     'resources/assets/admin/dist/css/AdminLTE.min.css',
     'resources/assets/admin/dist/css/skins/_all-skins.min.css',
-    'resources/assets/css/modal-window.css'
+    'resources/assets/css/modal-window.css',
+    'node_modules/vue-multiselect/dist/vue-multiselect.min.css'
 ], 'public/css/admin.css');
 
 mix.scripts([

@@ -29,4 +29,9 @@
 }
 .modal-body {
     margin: 20px 0;
+    background-color: white;
+}
+
+.thumb {
+    max-width: 40rem !important;
 }

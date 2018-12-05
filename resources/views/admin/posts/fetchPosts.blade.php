@@ -25,8 +25,9 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+
                     <div id="App">
-                        <users></users>
+                        <posts></posts>
 
                     </div>
 

@@ -240,28 +240,30 @@
 
 <script src="/js/admin.js"></script>
 
-<script src="/js/ckeditor/ckeditor.js"></script>
-<script src="/js/ckfinder/ckfinder.js"></script>
+{{--<script src="/js/ckeditor/ckeditor.js"></script>--}}
+{{--<script src="/js/ckfinder/ckfinder.js"></script>--}}
 
 
-<script>
-    $(document).ready(function(){
-        var editor = CKEDITOR.replaceAll();
-        CKFinder.setupCKEditor( editor );
-    })
 
-</script>
+{{--<script>--}}
+    {{--$(document).ready(function(){--}}
+        {{--var editor = CKEDITOR.replaceAll();--}}
+        {{--CKFinder.setupCKEditor( editor );--}}
+    {{--})--}}
+
+{{--</script>--}}
 <script>
 $(document).ready(function (){
   $("#example1").DataTable();
-  $(".select2").select2();
+//  $(".select2").select2();
     //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true,
-      format: 'dd/mm/yy'
-    });
+//    $('#datepicker').datepicker({
+//      autoclose: true,
+//      format: 'dd/mm/yy'
+//    });
 });
 </script>
+<script src="https://cdn.ckeditor.com/4.6.1/full/ckeditor.js"></script>
 
 <script src="{{ mix('js/app.js') }}"></script>
 

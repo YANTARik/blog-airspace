@@ -2,23 +2,36 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
+import VueProgressBar from 'vue-progressbar'
+import Users from './components/Users.vue';
+import Posts from './components/Posts.vue';
+import swal from 'sweetalert2'
+import { Form, HasError, AlertError } from 'vform';
+import VueCkeditor from 'vue-ckeditor2';
+// import Ckeditor from './ckeditor.js';
+import Datepicker from 'vuejs-datepicker';
+import Multiselect from 'vue-multiselect';
+window._ = require('lodash');
+var moment = require('moment');
+
 //
+
+
+
 Vue.use(VueRouter);
 Vue.use(VeeValidate, config);
-//
-import VueProgressBar from 'vue-progressbar'
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',
     failedColor: 'red',
     height: '3px'
-})
+});
 
-import Users from './components/users/Users.vue';
+window._ = require('lodash');
+window.toast = toast;
+window.Form = Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
 
-import { Form, HasError, AlertError } from 'vform';
-
-
-import swal from 'sweetalert2'
 window.swal = swal;
 
 const toast = swal.mixin({
@@ -28,31 +41,28 @@ const toast = swal.mixin({
     timer: 3000
 });
 
-window.toast = toast;
+const app = new Vue({
 
-window.Form = Form;
-Vue.component(HasError.name, HasError)
-Vue.component(AlertError.name, AlertError)
+    el: '#App',
+    components: {
+        Users,
+        Posts,
+        Multiselect,
+        Datepicker,
+        VueCkeditor
 
-
-
-const users = new Vue({
-
-    el: '#UserController',
-    template: `<users></users>`,
-    components: { Users },
+    },
     data: {
         users: [],
+        posts: [],
         hasError: true,
         hasDeleted: true,
         hasAgeError: true,
         showModal: false,
     },
     routes: [
-        { path: '/api/admin/users', name: 'api.users.store', component: Users },
-        { path: '/api/admin/users/:id', name: 'api.users.update', component: Users},
-        { path: '/api/admin/users/:id', name: 'api.users.destroy', component: Users},
-
+        { path: '/api/users', name: 'api.users.store', component: Users },
+        { path: '/api/posts', name: 'api.posts.store', component: Posts }
     ]
 });
 
@@ -71,3 +81,13 @@ const config = {
     locale: 'en',
     validity: false
 };
+
+Vue.component(
+    'users-list',
+    require('./components/Users.vue')
+);
+Vue.component(
+    'posts-list',
+    require('./components/Posts.vue')
+);
+

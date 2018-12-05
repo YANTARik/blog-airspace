@@ -19,5 +19,12 @@ Route::group(['prefix' => '', 'namespace' => 'Admin', 'as' => 'api.'], function 
     Route::post('/users', 'UsersController@store');
     Route::post('/users/{user}', 'UsersController@update');
     Route::delete('/users/{user}', 'UsersController@destroy');
+
+    Route::get('/posts', 'PostsController@fetchPosts');
+    Route::post('/posts', 'PostsController@store');
+    Route::post('/posts/{post}', 'PostsController@update');
+    Route::delete('/posts/{post}', 'PostsController@destroy');
+
+    Route::get('/tags', 'TagsController@fetchTags');
 });
 

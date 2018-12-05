@@ -20,6 +20,17 @@ class TagsController extends Controller
         return view('admin.tags.create');
     }
 
+    public function fetchTags()
+    {
+        $tags = Tag::orderBy('created_at', 'desc')
+            ->get();
+
+        return response()
+            ->json([
+                'tags' => $tags
+            ]);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [

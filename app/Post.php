@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use App\User;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -13,20 +14,21 @@ class Post extends Model
 
     protected $fillable = ['title', 'content', 'image', 'user_id', 'date', 'description'];
 
-    public function author() {
-
-
+    public function author()
+    {
         return $this->belongsTo(
             User::class,
             'user_id'
         );
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
 
-    public function tags() {
+    public function tags()
+    {
         return $this->belongsTomany(
             Tag::class,
             'post_tags',
@@ -35,7 +37,20 @@ class Post extends Model
         );
     }
 
-    public function sluggable() {
+    public function getPostTags()
+    {
+        $postTags = $this->belongsTomany(
+            Tag::class,
+            'post_tags',
+            'post_id',
+            'tag_id'
+        );
+
+        return $postTags;
+    }
+
+    public function sluggable()
+    {
         return [
             'slug' => [
                 'source' => 'title',
@@ -43,33 +58,35 @@ class Post extends Model
         ];
     }
 
-//    public static function add($fields) {
-//        $post = new static;
-//        $post->fill($fields);
-//        $post->user_id = 1;
-//        $post->save();
-//
-//        return $post;
-//    }
-//
-//    public function edit($fields) {
-//        $this->fill($fields);
-//        $this->save();
-//    }
+    public static function add($fields) {
+        $post = new static;
+        $post->fill($fields);
+        $post->user_id = 1;
+        $post->save();
 
-    public function remove() {
+        return $post;
+    }
+
+    public function edit($fields) {
+        $this->fill($fields);
+        $this->save();
+    }
+
+    public function remove()
+    {
         $this->removeImage();
         $this->delete();
     }
 
-    public function removeImage() {
+    public function removeImage()
+    {
         if ($this->image != null) {
             Storage::delete('uploads/' . $this->image);
         }
     }
 
-    public function uploadImage($image) {
-        //dd($image);
+    public function uploadImage($image)
+    {
         if ($image == null) {return;}
 
         $this->removeImage();
@@ -79,21 +96,24 @@ class Post extends Model
         $this->save();
     }
 
-    public function getImage() {
+    public function getImage()
+    {
         if ($this->image == null) {
             return '/images/blog-post-2.jpg';
         }
         return '/uploads/' . $this->image;
     }
 
-    public function setDateAttribute($value) {
+    public function setDateAttribute($value)
+    {
+        //dd($value);
+        /////$date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
 
-        $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
-
-        $this->attributes['date'] = $date;
+        $this->attributes['date'] = $value;
     }
 
-    public function getDateAttribute($value) {
+    public function getDateAttribute($value)
+    {
 
         $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
 
@@ -112,7 +132,8 @@ class Post extends Model
         return Carbon::createFromFormat('Y-m-d', $this->attributes['date'])->format('F d, Y');
     }
 
-    public function getComments() {
+    public function getComments()
+    {
         return $this->comments()->get();
     }
 
